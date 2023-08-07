@@ -1,5 +1,24 @@
-.App {
+.App{
   text-align: center;
   margin: 0rem;
   padding: 0rem;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column !important;
 }
+
+.Main{
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+button, a{
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
+  color: #000;
+}
+
+

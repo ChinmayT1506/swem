@@ -1,0 +1,147 @@
+.Navbar {
+    background-color: #fff;
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .Header {
+        height: 10vh;
+        width: 20vw;
+        background-color: green;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Hamburger {
+        display: none;
+    }
+
+    .logoutBar {
+        .userIcon {
+            margin-right: 3.3rem;
+            font-size: 4rem !important;
+            color: grey;
+            cursor: pointer;
+        }
+
+        .logoutDiv {
+            position: absolute;
+            top: 5rem;
+            right: 3rem;
+            padding: 0.5rem 0.2rem;
+            background-color: rgb(226, 224, 224);
+            border-radius: 0.3rem;      
+            // border: 1px black solid;
+            button {
+                background-color: #e0e4e2;
+                font-family: 'Montserrat';
+                padding: 0.5rem 0.8rem;
+                color: #080505;
+                border: none;
+            }
+        }
+    }
+
+}
+
+.LogOutDiv {
+    background-color: antiquewhite;
+    height: 2rem;
+    width: 10rem;
+}
+
+@media only screen and (max-width: 1100px) {
+    .Navbar {
+        height: 10vh;
+        width: 100vw;
+        display: flex;
+        justify-content: space-between;
+        background-color: green;
+        align-items: center;
+
+        .Header {
+            h4 {
+                font-size: 0.8rem;
+                max-width: 20rem;
+            }
+        }
+
+        .Hamburger {
+            width: 10vw;
+        }
+
+        .logoutBar {
+            .logoutDiv{
+                right: 1rem;
+            }
+            .userIcon {
+                margin-right: 1rem;
+            }
+
+        }
+    }
+}
+
+.NavLinks {
+    height: 0rem;
+    width: 0rem;
+}
+
+
+@media only screen and (max-width: 1100px) {
+    .NavLinks {
+        padding: 1.5rem 2rem 2rem;
+        height: max-content;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        flex-direction: row;
+        background-color: #fff;
+
+        .active {
+            color: rgb(31, 151, 53);
+        }
+
+        h5 {
+            font-size: 1rem;
+            padding: 0.2rem 0rem;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .navStack {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            height: max-content;
+            width: max-content;
+        }
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .Navbar {
+        .Header {
+            h4 {
+                width: 10rem;
+                font-size: 1rem;
+            }
+        }
+
+        .Hamburger {
+            display: flex;
+            width: 24vw;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}

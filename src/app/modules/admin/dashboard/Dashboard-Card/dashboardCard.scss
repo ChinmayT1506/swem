@@ -1,0 +1,47 @@
+.CardBox{
+    height: 90%;
+    border-radius: 0.6rem;
+    width: 23%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: rgb(230, 250, 249);
+    .content{
+        display: flex;
+        margin-top: 5%;
+        margin-left: 7%;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        line-height: 2rem;
+        h3{
+            padding-left: 3px;
+        }
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    .CardBox{
+        height: 100%;
+        width: 100%;
+        padding: 0.1rem 0rem 2rem;
+        display: flex;
+        justify-content: flex-start;
+        .content{
+            display: flex;
+            // margin-top: 2%;
+            // margin-left: 2%;
+            justify-content: center;
+            align-items: start;
+            flex-direction: column;
+            line-height: 2.5rem;
+            h2{
+                display: flex;
+                justify-content: start;
+                align-items: flex-start;
+                padding-left: 3px;
+                font-size: 1rem;
+            }
+        }
+    } 
+}
