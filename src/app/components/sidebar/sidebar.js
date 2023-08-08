@@ -4,7 +4,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import Grid from '@mui/material/Grid';
 import GridViewIcon from '@mui/icons-material/GridView';
 import './sidebar.scss'
@@ -33,14 +32,11 @@ export default function Sidebar() {
     const [isCollapse3, setCollapse3] = useState(false);
     const isAdmin = true;
 
-    // const handleCollapse = () => {
-    // };
-    // const handleCollapse2 = () => {
-    //     setCollapse2(!isCollapse2)
-    // }
-    // const handleCollapse3 = () => {
-    //     setCollapse3(!isCollapse3)
-    // }
+    function logout() {
+        localStorage.removeItem("accessToken")
+        navigate("/login")
+
+    }
 
     return (
         <Grid className='Sidebar'>
@@ -67,7 +63,7 @@ export default function Sidebar() {
                                 >
                                     <SchemaIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Schemes" sx={1} />
+                                <ListItemText className="list-text" primary="Schemes" sx={1} />
                             </ListItemButton>
                         </ListItem>
                     </List>
@@ -78,8 +74,8 @@ export default function Sidebar() {
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
-                                    justifyContent: 'initial',
                                     px: 1.7,
+                                    justifyContent: 'initial',
                                 }}
                             >
                                 <ListItemIcon
@@ -91,7 +87,7 @@ export default function Sidebar() {
                                 >
                                     <EventIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Events" sx={1} />
+                                <ListItemText className="list-text" primary="Events" sx={1} />
                             </ListItemButton>
                         </ListItem>
                     </List>
@@ -114,7 +110,7 @@ export default function Sidebar() {
                             >
                                 <PersonIcon />
                             </ListItemIcon>
-                            <ListItemText primary="User" sx={{ opacity: 1 }} />
+                            <ListItemText className="list-text" primary="User" sx={{ opacity: 1 }} />
                             {isCollapse ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
                     </ListItem>
@@ -139,54 +135,85 @@ export default function Sidebar() {
                                     >
                                         <PersonIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Anganwadi" sx={1} />
+                                    <ListItemText className="list-text" primary="Anganwadi" sx={1} />
                                 </ListItemButton>
                             </ListItem>
                         </NavLink>
                         {isAdmin ?
-                            <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 40,
-                                        justifyContent: 'initial',
-                                        px: 1.7,
-                                    }}
-                                >
-                                    <ListItemIcon
+                            <NavLink to='/users/hod' >
+                                <ListItem className="list-item-wrapper" disablePadding sx={{ display: 'block' }}>
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: 3,
-                                            justifyContent: 'center',
+                                            minHeight: 40,
+                                            justifyContent: 'initial',
+                                            px: 1.7,
                                         }}
                                     >
-                                        <PersonIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="HOD" sx={1} />
-                                </ListItemButton>
-                            </ListItem> : ""}
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: 3,
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <PersonIcon />
+                                        </ListItemIcon>
+                                        <ListItemText className="list-text" style={{
+                                            fontSize: "10px"
+                                        }} primary="HOD" sx={1} />
+                                    </ListItemButton>
+                                </ListItem>
+                            </NavLink> : ""
+                        }
                         {isAdmin ?
-                            <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 40,
-                                        justifyContent: 'initial',
-                                        px: 1.7,
-                                    }}
-                                >
-                                    <ListItemIcon
+                            <NavLink to="/users/cdpo">
+                                <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: 3,
-                                            justifyContent: 'center',
+                                            minHeight: 40,
+                                            justifyContent: 'initial',
+                                            px: 1.7,
                                         }}
                                     >
-                                        <PersonIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="CDPO" sx={1} />
-                                </ListItemButton>
-                            </ListItem> : ""}
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: 3,
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <PersonIcon />
+                                        </ListItemIcon>
+                                        <ListItemText className="list-text" primary="CDPO" sx={1} />
+                                    </ListItemButton>
+                                </ListItem>
+                            </NavLink> : ""
+                        }
                         {isAdmin ?
-
+                            <NavLink to="/users/dpo">
+                                <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
+                                    <ListItemButton
+                                        sx={{
+                                            minHeight: 40,
+                                            justifyContent: 'initial',
+                                            px: 1.7,
+                                        }}
+                                    >
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: 3,
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <PersonIcon />
+                                        </ListItemIcon>
+                                        <ListItemText className="list-text" primary="DPO" sx={1} />
+                                    </ListItemButton>
+                                </ListItem>
+                            </NavLink> : ""
+                        }
+                        <NavLink to="/users/geoTagAnganwadi">
                             <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
                                 <ListItemButton
                                     sx={{
@@ -202,31 +229,12 @@ export default function Sidebar() {
                                             justifyContent: 'center',
                                         }}
                                     >
-                                        <PersonIcon />
+                                        <MapIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="DPO" sx={1} />
+                                    <ListItemText className="list-text" primary="Geo Tag Anganwadi" sx={1} />
                                 </ListItemButton>
-                            </ListItem> : ""}
-                        <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 40,
-                                    justifyContent: 'initial',
-                                    px: 1.7,
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: 3,
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <MapIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Geo Tag Anganwadi" sx={1} />
-                            </ListItemButton>
-                        </ListItem>
+                            </ListItem>
+                        </NavLink>
                     </List>
                 </Collapse>
                 <List className='List'>
@@ -247,7 +255,7 @@ export default function Sidebar() {
                             >
                                 <ReportIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Reports" sx={{ opacity: 1 }} />
+                            <ListItemText className="list-text" primary="Reports" sx={{ opacity: 1 }} />
                             {isCollapse2 ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
                     </ListItem>
@@ -271,7 +279,7 @@ export default function Sidebar() {
                                 >
                                     <MapIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Geospatial Calculator" sx={1} />
+                                <ListItemText className="list-text" primary="Geospatial Calculator" sx={1} />
                             </ListItemButton>
                         </ListItem>
                         <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
@@ -291,7 +299,7 @@ export default function Sidebar() {
                                 >
                                     <DirectionsIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Locate on Map" sx={1} />
+                                <ListItemText className="list-text" primary="Locate on Map" sx={1} />
                             </ListItemButton>
                         </ListItem>
                     </List>
@@ -314,33 +322,35 @@ export default function Sidebar() {
                             >
                                 <ManageAccountsIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Manage Account" sx={{ opacity: 1 }} />
+                            <ListItemText className="list-text" primary="Manage Account" sx={{ opacity: 1 }} />
                             {isCollapse3 ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
                     </ListItem>
                 </List>
                 <Collapse in={isCollapse3} timeout="auto" unmountOnExit>
                     <List className='List'>
-                        <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 40,
-                                    justifyContent: 'initial',
-                                    px: 1.7,
-                                }}
-                            >
-                                <ListItemIcon
+                        <NavLink to="profile">
+                            <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
+                                <ListItemButton
                                     sx={{
-                                        minWidth: 0,
-                                        mr: 3,
-                                        justifyContent: 'center',
+                                        minHeight: 40,
+                                        justifyContent: 'initial',
+                                        px: 1.7,
                                     }}
                                 >
-                                    <Person2Icon />
-                                </ListItemIcon>
-                                <ListItemText primary="Profile" sx={{ opacity: 1 }} />
-                            </ListItemButton>
-                        </ListItem>
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: 3,
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <Person2Icon />
+                                    </ListItemIcon>
+                                    <ListItemText className="list-text" primary="Profile" sx={{ opacity: 1 }} />
+                                </ListItemButton>
+                            </ListItem>
+                        </NavLink>
                         <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
@@ -358,32 +368,34 @@ export default function Sidebar() {
                                 >
                                     <PasswordIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Change Password" sx={{ opacity: 1 }} />
+                                <ListItemText className="list-text" primary="Change Password" sx={{ opacity: 1 }} />
                             </ListItemButton>
                         </ListItem>
                     </List>
                 </Collapse>
                 <List className='List'>
-                    <ListItem className="list-item" disablePadding sx={{ display: 'block' }} >
-                        <ListItemButton
-                            sx={{
-                                minHeight: 40,
-                                justifyContent: 'initial',
-                                px: 1.7,
-                            }}
-                        >
-                            <ListItemIcon
+                    <NavLink to="event-occurence">
+                        <ListItem className="list-item" disablePadding sx={{ display: 'block' }} >
+                            <ListItemButton
                                 sx={{
-                                    minWidth: 0,
-                                    mr: 3,
-                                    justifyContent: 'center',
+                                    minHeight: 40,
+                                    justifyContent: 'initial',
+                                    px: 1.7,
                                 }}
                             >
-                                <EventAvailableIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Event Occurance" sx={{ opacity: 1 }} />
-                        </ListItemButton>
-                    </ListItem>
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: 3,
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <EventAvailableIcon />
+                                </ListItemIcon>
+                                <ListItemText className="list-text" primary="Event Occurence" sx={{ opacity: 1 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </NavLink>
                 </List>
                 <List className='List'>
                     <ListItem className="list-item" disablePadding sx={{ display: 'block' }} >
@@ -403,12 +415,12 @@ export default function Sidebar() {
                             >
                                 <QueryBuilderIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Query Management" sx={{ opacity: 1 }} />
+                            <ListItemText className="list-text" primary="Query Management" sx={{ opacity: 1 }} />
                         </ListItemButton>
                     </ListItem>
                 </List>
                 <List className='List'>
-                    <ListItem className="list-item" disablePadding sx={{ display: 'block' }} >
+                    <ListItem onClick={logout} className="list-item" disablePadding sx={{ display: 'block' }} >
                         <ListItemButton
                             sx={{
                                 minHeight: 40,
@@ -425,7 +437,7 @@ export default function Sidebar() {
                             >
                                 <LogoutIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Logout" sx={{ opacity: 1 }} />
+                            <ListItemText className="list-text" primary="Logout" sx={{ opacity: 1 }} />
                         </ListItemButton>
                     </ListItem>
                 </List>

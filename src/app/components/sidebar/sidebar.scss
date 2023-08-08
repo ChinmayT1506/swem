@@ -1,11 +1,11 @@
-.Sidebar{
+.Sidebar {
     flex-shrink: 0;
     background-color: #fff;
     display: flex;
     width: 20vw;
     height: 90vh;
     overflow: auto;
-    .sideNav{
+    .sideNav {
         margin: 1.8rem 1.1rem;
         padding: 0.7rem;
         width: 20rem;
@@ -14,7 +14,8 @@
         justify-content: 'flex-start';
         background-color: 'rgba(0, 128, 0, 0.8509803922)';
         color: 'white';
-        .sideNavHeader{
+
+        .sideNavHeader {
             display: flex;
             padding: 1rem 0rem;
             background-color: rgba(0, 128, 0, 0.8509803922);
@@ -22,20 +23,23 @@
             padding-left: 0.8rem;
             color: #fff;
             cursor: pointer;
-            h4{
+
+            h4 {
                 padding-left: 1.5rem;
                 display: flex;
                 align-items: center;
             }
         }
-        .active{
-                font-weight: bold;
-                color: rgb(76, 153, 76);
+
+        .active {
+            font-weight: bold;
+            color: rgb(76, 153, 76);
         }
-        .List{
-            .list-item{
+        .List {
+            .list-item {            
                 height: 5vh;
-                &:hover{
+                font-family: 'Montserrat';
+                &:hover {
                     background-color: rgba(0, 128, 0, 0.8509803922);
                     border-radius: 6px;
                     color: #fff;
@@ -46,8 +50,14 @@
     }
 }
 
+.list-text{
+    span{
+        font-family: Montserrat;
+    }
+}
+
 @media screen and (max-width: 1100px) {
-    .Sidebar{
+    .Sidebar {
         display: none;
     }
-  }
+}

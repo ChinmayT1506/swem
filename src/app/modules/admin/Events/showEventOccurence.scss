@@ -1,0 +1,58 @@
+.Events-main {
+    display: flex;
+    padding: 3rem 3.7rem;
+    height: 90vh;
+    width: 80vw;
+    background-color: rgb(241, 241, 241);
+    .Events-inner {
+        height: 100%;
+        width: 100%;
+        .Events-inner-1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 5%;
+            h2 {
+                color: green;
+            }
+        }
+        // .Events-inner-2 {
+        //     height: 100%;
+        //     width: 100%;
+        //     display: flex;
+        //     justify-content: flex-end;
+        //     align-items: center;
+        // }
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    .Events-main {
+        width: 100%;
+        padding: 3rem 1.1rem;
+        .Events-inner {
+            .Events-inner-1 {
+                button {
+                    width: 33%;
+                    font-size: 0.8rem;
+                }
+            }
+            .Events-inner-2 {
+                height: 10%;
+                width: 100%;
+                .search {
+                    width: 100%;
+                    font-size: 0.7rem;
+                    .search-input {
+                        margin-right: 1rem;
+                        font-size: 1rem;
+                    }
+                    .action {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+
+    }
+}

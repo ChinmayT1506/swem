@@ -29,14 +29,16 @@ export default function Login() {
                 [name]: value
             }
         })
-        console.log(loginEntry)
     }
 
     function submitLogin(event) {
         event.preventDefault();
         if (JSON.stringify(LoginCred) === JSON.stringify(loginEntry)) {
             localStorage.setItem("accessToken", JSON.stringify(loginEntry.mobNum))
-            navigate("/dashboard")
+            toast.success("Login Successful")
+            setTimeout(() => {
+                navigate("/dashboard")
+            }, 1500);
         }
         else {
             navigate("/login")
@@ -58,6 +60,18 @@ export default function Login() {
         }
     }
 
+    function onlyNumeric(event) {
+        let inputVal = event.target.value
+        let pattern = /^[0-9]+$/;
+        if (pattern.test(inputVal)) {
+            document.getElementById('mobNum').value = inputVal;
+        }
+        else {
+            let num = inputVal.slice(0, -1);
+            document.getElementById('mobNum').value = num;
+        }
+    }
+
     return (
         <Grid className='login-container'>
             <Box className='login-wrapper'>
@@ -71,7 +85,7 @@ export default function Login() {
                     <form>
                         <Stack className='login-form' spacing={2.1}>
                             <label htmlFor='mobNum' >Mobile Number</label>
-                            <input onChange={handleChange} className='input-Class' type='tel' name='mobNum' placeholder='Enter Mobile Number' maxLength={10} autoComplete='off'></input>
+                            <input onChange={handleChange} onInput={onlyNumeric} className='input-Class' id="mobNum" type='tel' name='mobNum' placeholder='Enter Mobile Number' maxLength={10} autoComplete='off'></input>
                             <label htmlFor='password'>Password</label>
                             <Grid className='passwordInput'>
                                 <input onChange={handleChange} className='password-input-Class' id='passwordInput' type='password' name='password' placeholder='Enter Password'></input>
@@ -85,17 +99,17 @@ export default function Login() {
                 </Stack>
             </Box>
             <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
+                position="top-right"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </Grid>
     )
 }

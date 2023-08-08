@@ -1,50 +1,64 @@
-.AddAnganwadi-Container {
+.Profile-Container {
     height: 100%;
     border-radius: 0.6rem;
     width: 100%;
-    // display: flex;
-    // align-items: flex-start;
-    // flex-direction: column !important;
     padding: 1.5rem 1.2rem;
     background-color: rgb(241, 241, 241);
-    .AddAnganwadiBox{
+    display: flex;
+    justify-content: center;
+
+    .ProfileBox {
+        height: fit-content;
+        width: 60%;
+        margin-top: 2.2rem;
         padding: 2.7rem 2.5rem 5rem;
         border-radius: 5px;
         background-color: #fff;
     }
+
     .Heading-Box {
         display: flex;
     }
+
     .form-main {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        input{
+
+        input {
             font-size: 1rem;
             padding: 0rem 1rem;
             height: 3rem;
             width: 95%;
+            border: 1px solid;
+            border-radius: 5px;
+            background-color: rgb(236, 238, 234);
+            color: rgb(167, 167, 167);
         }
-        .submitForm{
+
+        .submitForm {
             width: 100%;
             height: 3rem;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 4rem;
-            button{
+
+            button {
                 height: 90%;
                 width: 8rem;
                 margin: 0rem 0.5rem;
                 border-radius: 10px;
                 font-size: 0.9rem;
                 border: none;
-                &:first-child{
+
+                &:first-child {
                     background-color: red;
                     color: white;
                 }
-                &:last-child{
+
+                &:last-child {
                     background-color: green;
                     color: aliceblue;
                 }
@@ -53,8 +67,15 @@
     }
 }
 
-@media screen and (max-width: 1080px){
-    label{
+@media screen and (max-width: 1080px) {
+    .Profile-Container {
+        .ProfileBox {
+            width: 100%;
+            padding-left: 1.3rem;
+        }
+    }
+
+    label {
         font-size: 0.9rem;
     }
 }

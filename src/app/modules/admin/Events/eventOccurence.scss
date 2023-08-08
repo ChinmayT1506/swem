@@ -1,0 +1,94 @@
+.Event-Occurence-main {
+    display: flex;
+    padding: 3rem 3.7rem;
+    height: 90vh;
+    width: 80vw;
+    background-color: rgb(241, 241, 241);
+    .Event-Occurence-inner {
+        height: 100%;
+        width: 100%;
+        .Event-Occurence-inner-1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 5%;
+
+            h2 {
+                color: green;
+            }
+
+            button {
+                height: 98%;
+                width: 10%;
+                border: 1px solid white;
+                background-color: green;
+                color: #fff;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                font-weight: 800;
+
+            }
+        }
+
+        .Event-Occurence-inner-2 {
+            height: 10%;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .search {
+                display: flex;
+                align-items: space-between;
+                width: 40%;
+                display: flex;
+                flex-direction: row;
+
+                .search-input {
+                    margin-right: 2rem;
+                    width: 90%;
+                    border-radius: 3px;
+                    padding: 1rem;
+                    font-size: 1.2rem;
+                    border: 1px solid rgb(148, 139, 139);
+                }
+                .action{
+                    border-radius: 3px;
+                    border: 1px solid rgb(148, 139, 139);
+                    background-color: #fff;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    .Event-Occurence-main {
+        width: 100%;
+        padding: 3rem 1.1rem;
+        .Event-Occurence-inner {
+            .Event-Occurence-inner-1 {
+                button {
+                    width: 33%;
+                    font-size: 0.8rem;
+                }
+            }
+            .Event-Occurence-inner-2 {
+                height: 10%;
+                width: 100%;
+                .search {
+                    width: 100%;
+                    font-size: 0.7rem;
+                    .search-input {
+                        margin-right: 1rem;
+                        font-size: 1rem;
+                    }
+                    .action {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+
+    }
+}

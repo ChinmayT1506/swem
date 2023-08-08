@@ -13,18 +13,24 @@
             justify-content: flex-start;
             align-items: center;
             min-height: 5%;
-
             h2 {
                 color: green;
             }
         }
 
         .Dashboard-inner-2 {
-            min-height: 20%;
+            min-height: 13%;
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            h2{
+                font-weight: 500;
+            }
+            h3{
+                font-size: 1rem;
+                font-weight: 500;
+            }
         }
 
         .Dashboard-inner-3 {

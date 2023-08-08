@@ -1,0 +1,115 @@
+.Anganwadi-main {
+    display: flex;
+    padding: 3rem 3.7rem;
+    height: 90vh;
+    width: 80vw;
+    background-color: rgb(241, 241, 241);
+
+    .Anganwadi-inner {
+        height: 100%;
+        width: 100%;
+
+        .Anganwadi-inner-1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 5%;
+
+            h2 {
+                color: green;
+            }
+
+            .Anganwadi-ButtonBox {
+                height: 100%;
+                width: 28%;
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    height: 98%;
+                    width: 48%;
+                    border: 1px solid white;
+                    background-color: green;
+                    color: #fff;
+                    border-radius: 8px;
+                    font-size: 0.9rem;
+                    font-weight: 800;
+                    .link{
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .Anganwadi-inner-2 {
+            height: 10%;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .search {
+                display: flex;
+                align-items: space-between;
+                width: 40%;
+                display: flex;
+                flex-direction: row;
+
+                .search-input {
+                    margin-right: 2rem;
+                    width: 90%;
+                    border-radius: 3px;
+                    padding: 1rem;
+                    font-size: 1.2rem;
+                    border: 1px solid rgb(148, 139, 139);
+                }
+
+                .action {
+                    border-radius: 3px;
+                    border: 1px solid rgb(148, 139, 139);
+                    background-color: #fff;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    .Anganwadi-main {
+        width: 100%;
+        padding: 1rem;
+
+        .Anganwadi-inner {
+            .Anganwadi-inner-1 {
+                .Anganwadi-ButtonBox {
+                    height: 100%;
+                    width: 55%;
+                    button {
+                        width: 53%;
+                        font-size: 0.65rem;
+                    }
+                }
+            }
+
+            .Anganwadi-inner-2 {
+                height: 10%;
+                width: 100%;
+
+                .search {
+                    width: 100%;
+                    font-size: 0.7rem;
+
+                    .search-input {
+                        margin-right: 1rem;
+                        font-size: 1rem;
+                    }
+
+                    .action {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+
+    }
+}

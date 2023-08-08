@@ -1,15 +1,15 @@
-.Anganwadi-main {
+.GeoTagAnganwadi-main {
     display: flex;
     padding: 3rem 3.7rem;
     height: 90vh;
     width: 80vw;
     background-color: rgb(241, 241, 241);
 
-    .Anganwadi-inner {
+    .GeoTagAnganwadi-inner {
         height: 100%;
         width: 100%;
 
-        .Anganwadi-inner-1 {
+        .GeoTagAnganwadi-inner-1 {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -28,11 +28,13 @@
                 border-radius: 8px;
                 font-size: 0.9rem;
                 font-weight: 800;
-
+                .link{
+                    color: #fff;
+                }
             }
         }
 
-        .Anganwadi-inner-2 {
+        .GeoTagAnganwadi-inner-2 {
             height: 10%;
             width: 100%;
             display: flex;
@@ -66,18 +68,18 @@
 }
 
 @media screen and (max-width: 1180px) {
-    .Anganwadi-main {
+    .GeoTagAnganwadi-main {
         width: 100%;
         padding: 1rem;
-        .Anganwadi-inner {
-            .Anganwadi-inner-1 {
+        .GeoTagAnganwadi-inner {
+            .GeoTagAnganwadi-inner-1 {
                 button {
                     width: 33%;
                     font-size: 0.8rem;
                 }
             }
 
-            .Anganwadi-inner-2 {
+            .GeoTagAnganwadi-inner-2 {
                 height: 10%;
                 width: 100%;
                 .search {

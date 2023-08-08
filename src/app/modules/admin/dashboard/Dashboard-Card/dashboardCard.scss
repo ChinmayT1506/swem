@@ -1,11 +1,16 @@
 .CardBox{
     height: 90%;
-    border-radius: 0.6rem;
+    border-radius: 1rem;
     width: 23%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: rgb(230, 250, 249);
+    // border: 1px rgb(125, 177, 175) solid;
+    background-image: url("../../../../../assets/images/card-bg.png");
+    background-size: 1000%;
+    background-clip: initial;
+    background-position: center;
+    box-shadow: 0 4px 25px 0 rgba(168, 180, 208, 0.3);
     .content{
         display: flex;
         margin-top: 5%;
@@ -14,6 +19,9 @@
         align-items: start;
         flex-direction: column;
         line-height: 2rem;
+        h2{
+            font-size: 1.1rem;
+        }
         h3{
             padding-left: 3px;
         }
@@ -40,7 +48,10 @@
                 justify-content: start;
                 align-items: flex-start;
                 padding-left: 3px;
-                font-size: 1rem;
+                font-size: 1.5rem;
+            }
+            h3{
+                font-size: 1.5rem;
             }
         }
     } 

@@ -1,11 +1,12 @@
 import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import './anganwadiMain.scss'
+import './dpoMain.scss'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import BasicTable from '../../../components/table.jsx/table';
+import {CSVLink} from 'react-csv'
+import BasicTable from '../../../../components/table/table';
 
-export const Anganwadi = () => {
+export const DPO = () => {
     const [searchInput, setSearchInput] = useState("");
     let [data, setData] = useState([]);
     const navigate = useNavigate();
@@ -41,21 +42,20 @@ export const Anganwadi = () => {
         "Name",
         "Mobile Number",
         "District",
-        "Project",
-        "Anganwadi Centre Name",
-        "Anganwadi Centre Code",
-        "Anganwadi Centre Address",
         "Action"
     ]
 
     return (
-        <Grid className='Anganwadi-main'>
-            <Stack className='Anganwadi-inner' spacing={2}>
-                <Grid className='Anganwadi-inner-1'>
-                    <h2>Anganwadi</h2>
-                    <button onClick={() => navigate('addAnganwadi')}>Add Aanganwadi</button>
+        <Grid className='DPO-main'>
+            <Stack className='DPO-inner' spacing={2}>
+                <Grid className='DPO-inner-1'>
+                    <h2>DPO</h2>
+                    <Grid className='DPO-ButtonBox'>
+                        <button><CSVLink className="link" data={data} >Download</CSVLink></button>
+                        <button onClick={() => navigate('addDpo')}>Add DPO</button>
+                    </Grid>
                 </Grid>
-                <Grid className='Anganwadi-inner-2'>
+                <Grid className='DPO-inner-2'>
                     <Box className='search'>
                         <input className='search-input' placeholder='Search' onChange={handleChangeSearch} />
                         <FormControl fullWidth className="action">
@@ -73,7 +73,7 @@ export const Anganwadi = () => {
                         </FormControl>
                     </Box>
                 </Grid>
-                <BasicTable data={data} tableHead={tableHead} tableName="Anganwadi"/>
+                <BasicTable data={data} tableHead={tableHead} tableName="DPO"/>
             </Stack>
         </Grid>
     )
