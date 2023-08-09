@@ -1,7 +1,7 @@
 .Events-main {
     display: flex;
     padding: 3rem 3.7rem;
-    height: 90vh;
+    height: 100%;
     width: 80vw;
     background-color: rgb(241, 241, 241);
     .Events-inner {
@@ -11,18 +11,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 5%;
+            height: 4%;
             h2 {
                 color: green;
             }
         }
-        // .Events-inner-2 {
-        //     height: 100%;
-        //     width: 100%;
-        //     display: flex;
-        //     justify-content: flex-end;
-        //     align-items: center;
-        // }
+        .table-container{
+            margin: 2rem 0rem;
+        }
     }
 }
 

@@ -9,6 +9,10 @@ function BasicTable({ data, tableHead, tableName }) {
 
     const navigate = useNavigate();
 
+    const nthData = data[0] ?? ''
+    // console.log("obj is ", Object?.keys(nthData));
+    const tableHeader = Object?.keys(nthData);
+
     return (
         <>
             <Grid className="table-container">
@@ -16,7 +20,7 @@ function BasicTable({ data, tableHead, tableName }) {
                     <thead>
                         <tr>
                             {
-                                tableHead.map(item => (
+                                tableHead?.map((item, index) => (
                                     <th>{item}</th>
                                 ))
                             }
@@ -24,6 +28,13 @@ function BasicTable({ data, tableHead, tableName }) {
                     </thead>
                     <tbody>
                         {
+                            // data.map((item, index) => (
+                            //     <tr key={index}>
+                            //         {Object.values(item).map((item, index) => {
+                            //             return <td>{item}</td>
+                            //         })}
+                            //     </tr>
+                            // ))
                             (tableName === "Schemes" ?
                                 data.map((item, index) => (
                                     <tr key={index}>
@@ -130,20 +141,9 @@ function BasicTable({ data, tableHead, tableName }) {
                                                                     </td>
                                                                 </tr>
                                                             )) : (tableName = "Show-Event-Occurence") ?
-                                                                data.map((item, index) => (
-                                                                    <tr key={index}>
-                                                                        <td>{item.first_name}</td>
-                                                                        <td>8393939939</td>
-                                                                        <td>Baram</td>
-                                                                        <td>94.4533</td>
-                                                                        <td>79.8833</td>
-                                                                        <td>HOD</td>
-                                                                        <td>Pending</td>
-                                                                        <td style={{ cursor: 'pointer' }}>
-                                                                            <button onClick={() => navigate("/show-event-occurence")}>Show</button>
-                                                                        </td>
-                                                                    </tr>
-                                                                )) : ""
+                                                                <tr>
+                                                                    <td></td>
+                                                                </tr> : ""
                                             )
                                         ))
                                 )

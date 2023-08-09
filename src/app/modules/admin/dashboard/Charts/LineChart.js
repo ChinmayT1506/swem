@@ -15,7 +15,7 @@ const data = {
     // },
     {
       label: "Sample dataset",
-      data: [0, 0, 0, 10, 24, 36, 20, 28, 39, 30, 14, 35],
+      data: [0, 0, 10, 10, 24, 36, 20, 28, 39, 30, 14, 35],
       fill: false,
       borderColor: "blue"
     }

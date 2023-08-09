@@ -351,26 +351,28 @@ export default function Sidebar() {
                                 </ListItemButton>
                             </ListItem>
                         </NavLink>
-                        <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 40,
-                                    justifyContent: 'initial',
-                                    px: 1.7,
-                                }}
-                            >
-                                <ListItemIcon
+                        <NavLink to="changePassword">
+                            <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
+                                <ListItemButton
                                     sx={{
-                                        minWidth: 0,
-                                        mr: 3,
-                                        justifyContent: 'center',
+                                        minHeight: 40,
+                                        justifyContent: 'initial',
+                                        px: 1.7,
                                     }}
                                 >
-                                    <PasswordIcon />
-                                </ListItemIcon>
-                                <ListItemText className="list-text" primary="Change Password" sx={{ opacity: 1 }} />
-                            </ListItemButton>
-                        </ListItem>
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: 3,
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <PasswordIcon />
+                                    </ListItemIcon>
+                                    <ListItemText className="list-text" primary="Change Password" sx={{ opacity: 1 }} />
+                                </ListItemButton>
+                            </ListItem>
+                        </NavLink>
                     </List>
                 </Collapse>
                 <List className='List'>
@@ -398,26 +400,28 @@ export default function Sidebar() {
                     </NavLink>
                 </List>
                 <List className='List'>
-                    <ListItem className="list-item" disablePadding sx={{ display: 'block' }} >
-                        <ListItemButton
-                            sx={{
-                                minHeight: 40,
-                                justifyContent: 'initial',
-                                px: 1.7,
-                            }}
-                        >
-                            <ListItemIcon
+                    <NavLink to="/query">
+                        <ListItem className="list-item" disablePadding sx={{ display: 'block' }} >
+                            <ListItemButton
                                 sx={{
-                                    minWidth: 0,
-                                    mr: 3,
-                                    justifyContent: 'center',
+                                    minHeight: 40,
+                                    justifyContent: 'initial',
+                                    px: 1.7,
                                 }}
                             >
-                                <QueryBuilderIcon />
-                            </ListItemIcon>
-                            <ListItemText className="list-text" primary="Query Management" sx={{ opacity: 1 }} />
-                        </ListItemButton>
-                    </ListItem>
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: 3,
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <QueryBuilderIcon />
+                                </ListItemIcon>
+                                <ListItemText className="list-text" primary="Query Management" sx={{ opacity: 1 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </NavLink>
                 </List>
                 <List className='List'>
                     <ListItem onClick={logout} className="list-item" disablePadding sx={{ display: 'block' }} >

@@ -88,7 +88,7 @@ export const Navbar = () => {
             <NavLink to="/Change Password"><h5>Change Password</h5></NavLink>
           </Collapse>
         </Stack>
-        <NavLink to="/eventOccurance"><h5>Event Occurance</h5></NavLink>
+        <NavLink to="/event-occurence"><h5>Event Occurance</h5></NavLink>
         <NavLink to="/queryManagement"><h5>Query Management</h5></NavLink>
         <NavLink to="/logout"><h5>Log out</h5></NavLink>
       </Grid>

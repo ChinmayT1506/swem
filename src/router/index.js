@@ -27,6 +27,8 @@ import EditGeoTagForm from '../app/modules/admin/UserPages/GeoTagAnganwadi/editG
 import { GeoTagAnganwadi } from '../app/modules/admin/UserPages/GeoTagAnganwadi/geoTagAnganwadimain'
 import { EventOccurance } from '../app/modules/admin/Events/eventOccurence'
 import { ShowEventOccurence } from '../app/modules/admin/Events/showEventOccurence'
+import ChangePasswordScreen from '../app/modules/admin/ProfileScreen/changePasswordScreen'
+import { QueryManagement } from '../app/modules/admin/queryManagement/queryManagement'
 
 
 export const Mainroute = () => {
@@ -61,6 +63,8 @@ export const Mainroute = () => {
                     <Route path="/users/geoTagAnganwadi" element={<GeoTagAnganwadi />} />
                     <Route path="/users/geoTagAnganwadi/editGeoTagAnganwadi" element={<EditGeoTagForm />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/changePassword" element={<ChangePasswordScreen />} />
+                    <Route path="/query" element={<QueryManagement />} />
                 </Route>
             </Routes>
         </>

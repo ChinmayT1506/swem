@@ -31,7 +31,7 @@ export const Events = () => {
     function handleChangeSearch(event) {
         setSearchInput(event.target.value);
     }
-    if(searchInput){
+    if (searchInput) {
         data = data.filter((item) => {
             if (item.first_name.toLowerCase().includes(searchInput.toLowerCase())) {
                 return item

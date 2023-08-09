@@ -1,11 +1,12 @@
 import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import './schemes.scss'
+import './queryManagement.scss'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BasicTable from '../../../components/table/table';
 
-export const Schemes = () => {
+export const QueryManagement = () => {
+
     const [searchInput, setSearchInput] = useState("");
     let [data, setData] = useState([]);
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ export const Schemes = () => {
     function handleChangeSearch(event) {
         setSearchInput(event.target.value);
     }
-    if (searchInput) {
+    if(searchInput){
         data = data.filter((item) => {
             if (item.first_name.toLowerCase().includes(searchInput.toLowerCase())) {
                 return item
@@ -37,26 +38,28 @@ export const Schemes = () => {
         })
     }
 
-    const tableHead = [
-        "Date of Commencement",
-        "Scheme Name",
-        "AA Cost",
-        "Additional Requirement",
-        "Action"
+    let tableHead = [
+        "Name",
+        "Subject",
+        "Message",
+        "District",
+        "Project",
+        "Date",
+        "Status",
+        "Action",
     ]
 
     return (
-        <Grid className='Schemes-main'>
-            <Stack className='Schemes-inner' spacing={2}>
-                <Grid className='Schemes-inner-1'>
-                    <h2>Schemes</h2>
-                    <button onClick={() => navigate('addScheme')}>Add Scheme</button>
+        <Grid className='queryManagement-main'>
+            <Stack className='queryManagement-inner' spacing={2}>
+                <Grid className='queryManagement-inner-1'>
+                    <h2>Query Management</h2>
                 </Grid>
-                <Grid className='Schemes-inner-2'>
+                <Grid className='queryManagement-inner-2'>
                     <Box className='search'>
                         <input className='search-input' placeholder='Search' onChange={handleChangeSearch} />
                         <FormControl fullWidth className="action">
-                            <InputLabel id="filterlabel">Scheme Filter</InputLabel>
+                            <InputLabel id="filterlabel">Event Filter</InputLabel>
                             <Select
                                 labelId="filterlabel"
                                 id="select"
@@ -65,13 +68,14 @@ export const Schemes = () => {
                             // onChange={handleChange}
                             >
                                 <MenuItem value="All">All</MenuItem>
-                                <MenuItem value="Scheme-Name">Scheme-Name</MenuItem>
+                                <MenuItem value="Event-Name">Event-Name</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
                 </Grid>
-                <BasicTable data={data} tableHead={tableHead} tableName="Schemes"/>
+                <BasicTable data={data} tableHead={tableHead} tableName="queryManagement" />
             </Stack>
+
         </Grid>
     )
 }
