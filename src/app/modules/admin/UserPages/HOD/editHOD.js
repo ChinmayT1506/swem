@@ -3,7 +3,7 @@ import './addHod.scss'
 import { Box, Grid, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export default function EditHODForm() {
 
@@ -26,6 +26,7 @@ export default function EditHODForm() {
             <Grid className='AddHOD-Container'>
                 <Stack className='AddHODBox' spacing={5}>
                     <Box className='Heading-Box'>
+                        <KeyboardBackspaceIcon onClick={() => navigate(-1)} sx={{ cursor: 'pointer', paddingRight: '0.8rem' }} />
                         <h3>Edit HOD</h3>
                     </Box>
                     <Stack className='form-main' spacing={2}>

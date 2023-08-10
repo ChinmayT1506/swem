@@ -3,6 +3,8 @@ import './addDpo.scss'
 import { Box, Grid, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+
 
 export default function EditDPOForm() {
 
@@ -25,6 +27,8 @@ export default function EditDPOForm() {
             <Grid className='AddDPO-Container'>
                 <Stack className='AddDPOBox' spacing={5}>
                     <Box className='Heading-Box'>
+                        <KeyboardBackspaceIcon onClick={() => navigate(-1)} sx={{ cursor: 'pointer', paddingRight: '0.8rem' }} />
+
                         <h3>Edit DPO</h3>
                     </Box>
                     <Stack className='form-main' spacing={2}>

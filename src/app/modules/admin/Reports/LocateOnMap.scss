@@ -1,0 +1,31 @@
+.locateOnMap-Container{
+    height: 100%;
+    border-radius: 0.6rem;
+    width: 100%;
+    padding: 1.5rem 1.2rem;
+    background-color: rgb(241, 241, 241);
+    .innerBox-1{
+        height: 9%;
+        width: 100%;
+        margin-top: 1.5rem;
+        padding: 0rem 0rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: column;
+        // background-color: aqua;
+        label{
+            font-size: 1.2rem;
+        }
+        input, select, option{
+            font-family: 'Montserrat';
+            width: 100%;
+            height: 2.5rem;
+            font-size: 1rem;
+        }
+    }
+    .innerBox-2{
+        margin-top: 1rem;
+        // background-color: red;
+    }
+}

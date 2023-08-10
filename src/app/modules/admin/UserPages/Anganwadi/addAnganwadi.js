@@ -3,6 +3,8 @@ import './addAnganwadi.scss'
 import { Box, Grid, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+
 
 export default function AddAnganwadiForm() {
 
@@ -25,6 +27,7 @@ export default function AddAnganwadiForm() {
             <Grid className='AddAnganwadi-Container'>
                 <Stack className='AddAnganwadiBox' spacing={5}>
                     <Box className='Heading-Box'>
+                        <KeyboardBackspaceIcon onClick={() => navigate(-1)} sx={{ cursor: 'pointer', paddingRight: '0.8rem' }} />
                         <h3>Add Anganwadi</h3>
                     </Box>
                     <Stack className='form-main' spacing={2}>
@@ -49,7 +52,7 @@ export default function AddAnganwadiForm() {
 
                         <label for='anganwadiCentreCode'>Anganwadi Centre Code</label>
                         <input className='' id='anganwadiCentreCode' type='text' name='anganwadiCentreCode'></input>
-                        
+
                         <label for='anganwadiCentreCode'>Anganwadi Centre Address</label>
                         <input className='' id='anganwadiCentreCode' type='textarea' rows="3" name='anganwadiCentreCode'></input>
 

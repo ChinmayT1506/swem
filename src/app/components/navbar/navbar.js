@@ -10,7 +10,8 @@ import { Collapse } from '@mui/material';
 import ExpandMore from "@mui/icons-material/ExpandMore"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import CancelIcon from '@mui/icons-material/Cancel';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Navbar = () => {
 
@@ -18,7 +19,10 @@ export const Navbar = () => {
 
   function logout() {
     localStorage.removeItem("accessToken")
-    navigate("/login")
+    toast.success("User Logged Out Successfully")
+        setTimeout(() => {
+            navigate("/login")
+        }, 1500);
   }
 
   const [hamIconBool, setHamIconBool] = useState(true);
@@ -92,6 +96,18 @@ export const Navbar = () => {
         <NavLink to="/queryManagement"><h5>Query Management</h5></NavLink>
         <NavLink to="/logout"><h5>Log out</h5></NavLink>
       </Grid>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+    />
 
     </>
   )

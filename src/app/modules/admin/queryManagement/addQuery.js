@@ -1,12 +1,11 @@
 import React from 'react';
-import './addDpo.scss'
+import './addQuery.scss'
 import { Box, Grid, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
-
-export default function AddDPOForm() {
+export default function AddQueryForm() {
 
     const navigate = useNavigate();
 
@@ -24,28 +23,24 @@ export default function AddDPOForm() {
 
     return (
         <>
-            <Grid className='AddDPO-Container'>
-                <Stack className='AddDPOBox' spacing={5}>
+            <Grid className='AddQuery-Container'>
+                <Stack className='AddQueryBox' spacing={5}>
                     <Box className='Heading-Box'>
                         <KeyboardBackspaceIcon onClick={() => navigate(-1)} sx={{ cursor: 'pointer', paddingRight: '0.8rem' }} />
-                        <h3>Add DPO</h3>
+
+                        <h3>Add Query</h3>
                     </Box>
                     <Stack className='form-main' spacing={2}>
 
-                        <label for='DPOName'>Name</label>
-                        <input type='text' name='DPOName' autoComplete='off'></input>
+                        <label for='subject'>Subject</label>
+                        <input id='subject' type='text' name='subject' autoComplete='off'></input>
 
-                        <label for='mobNum'>Mobile Number</label>
-                        <input id='tel' type='tel' name='approvalCost'></input>
-
-                        <label for='district'>District</label>
-                        <input type='text' name='district' autoComplete='off'></input>
-
-                        <label for='password'>Password</label>
-                        <input id='password' type='password' name='password'></input>
-
-                        <label for='confirmPassword'>Confirm Password</label>
-                        <input id='confirmPassword' type='password' name='confirmPassword'></input>
+                        <label for='message'>Message</label>
+                        <input id='message' type='textarea' name='message'></input>
+                        
+                        <label for='referenceImage'>Reference Image</label>
+                        <input id='confirmPassword' type='text' name='referenceImage' value='Upload Image' disabled='disabled'></input>
+                        <input id='confirmPassword' type='file' name='referenceImage' placeholder='Upload Image'></input>
 
                         <Grid className='submitForm'>
                             <button onClick={() => navigate(-1)}>Cancel</button>

@@ -7,6 +7,8 @@ import BasicTable from '../../../components/table/table';
 
 export const QueryManagement = () => {
 
+    const isAdmin = true
+
     const [searchInput, setSearchInput] = useState("");
     let [data, setData] = useState([]);
     const navigate = useNavigate();
@@ -30,7 +32,7 @@ export const QueryManagement = () => {
     function handleChangeSearch(event) {
         setSearchInput(event.target.value);
     }
-    if(searchInput){
+    if (searchInput) {
         data = data.filter((item) => {
             if (item.first_name.toLowerCase().includes(searchInput.toLowerCase())) {
                 return item
@@ -54,6 +56,8 @@ export const QueryManagement = () => {
             <Stack className='queryManagement-inner' spacing={2}>
                 <Grid className='queryManagement-inner-1'>
                     <h2>Query Management</h2>
+                    {!isAdmin ? <button onClick={() => navigate('addQuery')}>Add Query</button>
+                    : ""}
                 </Grid>
                 <Grid className='queryManagement-inner-2'>
                     <Box className='search'>
@@ -73,7 +77,7 @@ export const QueryManagement = () => {
                         </FormControl>
                     </Box>
                 </Grid>
-                <BasicTable data={data} tableHead={tableHead} tableName="queryManagement" />
+                <BasicTable data={data} tableHead={tableHead} tableName="QueryManagement" />
             </Stack>
 
         </Grid>

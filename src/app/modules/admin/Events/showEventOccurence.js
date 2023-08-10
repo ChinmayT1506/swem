@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import './showEventOccurence.scss'
 import axios from 'axios';
 import BasicCarousel from '../../../components/Carousel/carousel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { BasicMarkedMap } from '../../../components/Maps/MarkedMap';
+import { useLocation, useNavigate } from 'react-router-dom';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 const style = {
   position: 'absolute',
@@ -23,12 +23,15 @@ const style = {
 
 export const ShowEventOccurence = () => {
 
-  const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   let [data, setData] = useState([]);
-
+  const location = useLocation()
+  // console.log(location.state.lat)
   // Get data
   useEffect(() => {
     (async function () {
@@ -37,7 +40,7 @@ export const ShowEventOccurence = () => {
           "https://reqres.in/api/users?page=2"
         );
         setData(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       } catch (err) {
         console.log(err);
       }
@@ -49,7 +52,10 @@ export const ShowEventOccurence = () => {
       <Grid className='Events-main'>
         <Stack className='Events-inner' spacing={2}>
           <Grid className='Events-inner-1'>
-            <h2>Detail Event Occurence</h2>
+            <h2>
+              <KeyboardBackspaceIcon onClick={() => navigate(-1)} sx={{ cursor: 'pointer', paddingRight: '0.8rem' }} />
+              Detail Event Occurence
+            </h2>
           </Grid>
           <Grid className="table-container">
             <table>
@@ -81,10 +87,10 @@ export const ShowEventOccurence = () => {
               </tbody>
             </table>
           </Grid >
-          <Grid>
+          <Grid className='carousel-container'>
             <BasicCarousel />
           </Grid>
-          <Grid className="table-container">
+          <Grid className="table-container table-2">
             <table>
               <thead>
                 <tr>
@@ -139,7 +145,7 @@ export const ShowEventOccurence = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <BasicMarkedMap />
+          <BasicMarkedMap lat={location.state.lat} long={location.state.long} />
         </Box>
       </Modal>
     </>

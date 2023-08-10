@@ -1,10 +1,8 @@
 import React from 'react';
 import './profile.scss'
 import { Box, Grid, Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
-
     const isAdmin = true;
     return (
         <>

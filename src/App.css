@@ -1,4 +1,4 @@
-.App{
+.App {
   text-align: center;
   margin: 0rem;
   padding: 0rem;
@@ -8,17 +8,18 @@
   flex-direction: column !important;
 }
 
-.Main{
+.Main {
   display: flex;
   justify-content: space-between;
   align-content: center;
 }
-button, a{
+
+button,
+a {
   cursor: pointer;
 }
-a{
+
+a {
   text-decoration: none;
   color: #000;
 }
-
-

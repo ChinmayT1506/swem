@@ -4,8 +4,12 @@ import { Box, Grid } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
+import ReplyIcon from '@mui/icons-material/Reply';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
-function BasicTable({ data, tableHead, tableName }) {
+function BasicTable({ data, tableHead, tableName, handleOpen }) {
+
+    const isAdmin = true;
 
     const navigate = useNavigate();
 
@@ -53,7 +57,7 @@ function BasicTable({ data, tableHead, tableName }) {
                                             <td>{item.first_name}</td>
                                             <td>CHSND</td>
                                             <td>Poshan Abhiyan</td>
-                                            <td><button>Show Occurences</button></td>
+                                            <td><button onClick={() => navigate("/event-occurence")}>Show Occurences</button></td>
                                             <td style={{ cursor: 'pointer' }}>
                                                 <EditIcon onClick={() => navigate("editEvent")} />
                                                 <DeleteIcon />
@@ -122,7 +126,7 @@ function BasicTable({ data, tableHead, tableName }) {
                                                                 <td>HOD</td>
                                                                 <td>Pending</td>
                                                                 <td style={{ cursor: 'pointer' }}>
-                                                                    <button>Show on Map</button>
+                                                                    <button onClick={handleOpen}>Show on Map</button>
                                                                     <EditIcon onClick={() => navigate("editGeoTagAnganwadi")} />
                                                                 </td>
                                                             </tr>
@@ -137,12 +141,23 @@ function BasicTable({ data, tableHead, tableName }) {
                                                                     <td>HOD</td>
                                                                     <td>Pending</td>
                                                                     <td style={{ cursor: 'pointer' }}>
-                                                                        <button onClick={() => navigate("/show-event-occurence")}>Show</button>
+                                                                        <button onClick={() => navigate("/show-event-occurence", { state: { lat: 28.6081, long: 77.3723 } })}>Show</button>
                                                                     </td>
                                                                 </tr>
-                                                            )) : (tableName = "Show-Event-Occurence") ?
+                                                            )) : (tableName = "QueryManagement") ?
                                                                 <tr>
-                                                                    <td></td>
+                                                                    <td>8Shyam</td>
+                                                                    <td>Not able to edit the Record of any Anganwadi Centre</td>
+                                                                    <td>When i open the record of Anganwadi Centre in edit mode by clicking on edit button, and after making changes in the reocrd like changing Phone Number or any other attribute or even without any change in record when i click on submit button the record did not get submit and shows the error "Negative value is not allowed" just below the field of Phone No.</td>
+                                                                    <td>Kathua</td>
+                                                                    <td>Kathua</td>
+                                                                    <td>08-08-2023</td>
+                                                                    <td>Completed</td>
+                                                                    {
+                                                                        isAdmin ?
+                                                                        <td onClick={() => navigate("/query/replyQuery")}><ReplyIcon sx={{cursor: 'pointer'}}/></td>
+                                                                        : <td onClick={() => navigate("/query/replyQuery")}><VisibilityIcon sx={{cursor: 'pointer'}}/></td>
+                                                                    }
                                                                 </tr> : ""
                                             )
                                         ))

@@ -2,6 +2,7 @@ import React from 'react';
 import './addEvent.scss'
 import { Box, Grid, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export default function EditEventForm() {
     const navigate = useNavigate();
@@ -10,6 +11,8 @@ export default function EditEventForm() {
             <Grid className='AddEvent-Container'>
                 <Stack className='AddEventBox' spacing={5}>
                     <Box className='Heading-Box'>
+                    <KeyboardBackspaceIcon onClick={() => navigate(-1)} sx={{cursor: 'pointer', paddingRight: '0.8rem'}}/>
+
                         <h3>Edit Event</h3>
                     </Box>
                     <Stack className='form-main' spacing={2}>

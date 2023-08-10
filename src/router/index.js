@@ -29,6 +29,9 @@ import { EventOccurance } from '../app/modules/admin/Events/eventOccurence'
 import { ShowEventOccurence } from '../app/modules/admin/Events/showEventOccurence'
 import ChangePasswordScreen from '../app/modules/admin/ProfileScreen/changePasswordScreen'
 import { QueryManagement } from '../app/modules/admin/queryManagement/queryManagement'
+import AddQueryForm from '../app/modules/admin/queryManagement/addQuery'
+import ReplyQueryForm from '../app/modules/admin/queryManagement/replyQuery'
+import { LocateOnMap } from '../app/modules/admin/Reports/LocateOnMap'
 
 
 export const Mainroute = () => {
@@ -65,6 +68,9 @@ export const Mainroute = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/changePassword" element={<ChangePasswordScreen />} />
                     <Route path="/query" element={<QueryManagement />} />
+                    <Route path="/query/addQuery" element={<AddQueryForm />} />
+                    <Route path="/query/replyQuery" element={<ReplyQueryForm />} />
+                    <Route path="/locate-on-map" element={<LocateOnMap />} />
                 </Route>
             </Routes>
         </>
