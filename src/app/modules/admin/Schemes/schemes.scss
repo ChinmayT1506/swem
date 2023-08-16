@@ -38,7 +38,6 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-
             .search {
                 display: flex;
                 align-items: space-between;
@@ -59,6 +58,29 @@
                     border-radius: 3px;
                     border: 1px solid rgb(148, 139, 139);
                     background-color: #fff;
+                }
+            }
+        }
+        .table-footer {
+            background-color: #fff;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            select {
+                font-size: 0.9rem;
+                outline: none;
+                border: none;
+                background-color: transparent;
+                margin: 0rem 1rem;
+            }
+            .pagination{
+                display: flex;
+                margin-right: 2rem;
+                padding-left: 1rem;
+                p{
+                    cursor: pointer;
                 }
             }
         }

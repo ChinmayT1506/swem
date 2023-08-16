@@ -12,17 +12,30 @@ import ExpandLess from "@mui/icons-material/ExpandLess"
 import CancelIcon from '@mui/icons-material/Cancel';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { DELETE } from '../../../services/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { delLoginData } from '../../redux/actions/loginAction';
 
 export const Navbar = () => {
 
-  const navigate = useNavigate();
+  const USER = useSelector(state => state?.getLogindata?.loginData[0])
+  const USER_TYPE = USER?.user_type
+  console.log(USER_TYPE)
 
-  function logout() {
-    localStorage.removeItem("accessToken")
-    toast.success("User Logged Out Successfully")
-        setTimeout(() => {
-            navigate("/login")
-        }, 1500);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  async function logout() {
+    const res = await DELETE("/user/session")
+    console.log(res);
+    dispatch(delLoginData(USER))
+    if (res.data.success) {
+      localStorage.removeItem("ACCESS_TOKEN")
+      toast.success("User Logged Out Successfully")
+      setTimeout(() => {
+        navigate("/")
+      }, 1500);
+    }
   }
 
   const [hamIconBool, setHamIconBool] = useState(true);
@@ -31,6 +44,30 @@ export const Navbar = () => {
   const [isCollapse2, setCollapse2] = useState(false)
   const [isCollapse3, setCollapse3] = useState(false)
   const [isCollapse4, setCollapse4] = useState(false)
+
+  function Collapser() {
+    if (isCollapse2 || isCollapse3) {
+      setCollapse2(false);
+      setCollapse3(false)
+    }
+    setCollapse(!isCollapse)
+  }
+
+  function Collapser2() {
+    if (isCollapse || isCollapse3) {
+      setCollapse(false);
+      setCollapse3(false);
+    }
+    setCollapse2(!isCollapse2)
+  }
+
+  function Collapser3() {
+    if (isCollapse || isCollapse2) {
+      setCollapse(false);
+      setCollapse2(false);
+    }
+    setCollapse3(!isCollapse3)
+  }
 
   function respondFunc() {
     document.getElementById("NavLinks").classList.toggle("hidden")
@@ -63,38 +100,38 @@ export const Navbar = () => {
         <NavLink to="/schemes"><h5>Schemes</h5></NavLink>
         <NavLink to="/events"><h5>Events</h5></NavLink>
         <Stack className='navStack'>
-          <h5 onClick={() => setCollapse(!isCollapse)}>
+          <h5 onClick={Collapser}>
             Users {isCollapse ? <ExpandLess /> : <ExpandMore />}
           </h5>
           <Collapse in={isCollapse} timeout="auto" unmountOnExit>
-            <NavLink to="/anganwadi"><h5>Anganwadi</h5></NavLink>
-            <NavLink to="/hod"><h5>HOD</h5></NavLink>
-            <NavLink to="/cdpo"><h5>CDPO</h5></NavLink>
-            <NavLink to="/dpo"><h5>DPO</h5></NavLink>
-            <NavLink to="/geotagAnganwadi"><h5>Geotag Anganwadi</h5></NavLink>
+            <NavLink to="users/anganwadi"><h5>Anganwadi</h5></NavLink>
+            <NavLink to="users/hod"><h5>HOD</h5></NavLink>
+            <NavLink to="users/cdpo"><h5>CDPO</h5></NavLink>
+            <NavLink to="users/dpo"><h5>DPO</h5></NavLink>
+            <NavLink to="users/geotagAnganwadi"><h5>Geotag Anganwadi</h5></NavLink>
           </Collapse>
         </Stack>
         <Stack className='navStack'>
-          <h5 onClick={() => setCollapse2(!isCollapse2)}>
+          <h5 onClick={Collapser2}>
             Reports {isCollapse2 ? <ExpandLess /> : <ExpandMore />}
           </h5>
           <Collapse in={isCollapse2} timeout="auto" unmountOnExit>
-            <NavLink to="/hod"><h5>Geospatial Calculator</h5></NavLink>
-            <NavLink to="/hod"><h5>Locate on map</h5></NavLink>
+            <NavLink to="/geospatial-calculator"><h5>Geospatial Calculator</h5></NavLink>
+            <NavLink to="/locate-on-map"><h5>Locate on map</h5></NavLink>
           </Collapse>
         </Stack>
         <Stack className='navStack'>
-          <h5 onClick={() => setCollapse3(!isCollapse3)}>
+          <h5 onClick={Collapser3}>
             Manage Account {isCollapse3 ? <ExpandLess /> : <ExpandMore />}
           </h5>
           <Collapse in={isCollapse3} timeout="auto" unmountOnExit>
             <NavLink to="/profile"><h5>Profile</h5></NavLink>
-            <NavLink to="/Change Password"><h5>Change Password</h5></NavLink>
+            <NavLink to="/ChangePassword"><h5>Change Password</h5></NavLink>
           </Collapse>
         </Stack>
         <NavLink to="/event-occurence"><h5>Event Occurance</h5></NavLink>
-        <NavLink to="/queryManagement"><h5>Query Management</h5></NavLink>
-        <NavLink to="/logout"><h5>Log out</h5></NavLink>
+        <NavLink to="/query"><h5>Query Management</h5></NavLink>
+        <h5 onClick={logout}>Log out</h5>
       </Grid>
       <ToastContainer
         position="top-right"
@@ -107,7 +144,7 @@ export const Navbar = () => {
         draggable
         pauseOnHover
         theme="light"
-    />
+      />
 
     </>
   )

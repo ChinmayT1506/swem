@@ -11,11 +11,11 @@ export const GeoTagAnganwadi = () => {
 
     const style = {
         position: 'absolute',
-        top: '50%',
+        top: '45%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 650,
-        height: 650,
+        height: 700,
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
@@ -117,6 +117,7 @@ export const GeoTagAnganwadi = () => {
                 </Stack>
             </Grid>
             <Modal
+                className='Modal'
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -126,6 +127,10 @@ export const GeoTagAnganwadi = () => {
                     data ?
                         <Box sx={style}>
                             <BasicMarkedMap lat={28.6081} long={77.3723} />
+                            <Grid className='submitForm'>
+                                <button>Approve</button>
+                                <button>Reject</button>
+                            </Grid>
                         </Box> :
                         <Box sx={style2}>
                             <h5>No Data Found</h5>

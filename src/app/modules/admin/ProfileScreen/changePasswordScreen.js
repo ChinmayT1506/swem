@@ -56,6 +56,7 @@ export default function ChangePasswordScreen() {
                     <Stack className='form-main' spacing={2}>
                         <label for='oldPassword'>Old Password</label>
                         <input type='password' name='oldPassword' placeholder='Old Password'></input>
+                        
                         <label for='newPassword'>New Password</label>
                         <Grid className='passwordInput'>
                             <input className='password-input-Class' id='passwordInput' type='password' name='passwordInput' placeholder='Enter New Password'></input>

@@ -2,35 +2,39 @@ import React from "react";
 import Chart from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 
-const data = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun","July",
-  "Aug","Sept", "Oct", "Nov", "Dec"],
-  datasets: [
-    // {
-    //   label: "First dataset",
-    //   data: [33, 53, 85, 41, 44, 65],
-    //   fill: true,
-    //   backgroundColor: "rgba(75,192,192,0.2)",
-    //   borderColor: "rgba(75,192,192,1)"
-    // },
-    {
-      label: "Sample dataset",
-      data: [0, 0, 10, 10, 24, 36, 20, 28, 39, 30, 14, 35],
-      fill: false,
-      borderColor: "blue"
-    }
-  ]
-};
+export default function LineChart({ Linedata }) {
 
-let options = {
-  responsive: true,
-  maintainAspectRatio: true
-}
+  const yearWiseCount = Array.from(Linedata?.map(item => {
+    return item.count
+  }))
 
-export default function LineChart() {
+  const data = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July",
+      "Aug", "Sept", "Oct", "Nov", "Dec"],
+    datasets: [
+      // {
+      //   label: "First dataset",
+      //   data: [33, 53, 85, 41, 44, 65],
+      //   fill: true,
+      //   backgroundColor: "rgba(75,192,192,0.2)",
+      //   borderColor: "rgba(75,192,192,1)"
+      // },
+      {
+        label: "count",
+        data: yearWiseCount,
+        fill: true,
+        borderColor: "blue",
+      }
+    ]
+  };
+
+  let options = {
+    responsive: true,
+    maintainAspectRatio: true
+  }
   return (
-    <div>
-      <Line data={data} options={options}/>
-    </div>
+    <>
+      <Line data={data} options={options} />
+    </>
   );
 }

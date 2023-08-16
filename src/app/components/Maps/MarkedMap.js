@@ -1,6 +1,5 @@
-import React, { useRef } from 'react'
-import ReactDOM from 'react-dom';
-import { Map, TileLayer, Marker, Popup, MapContainer } from 'react-leaflet';
+import React from 'react'
+import { TileLayer, Marker, Popup, MapContainer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
 import image from "../../../assets/images/marker.png"

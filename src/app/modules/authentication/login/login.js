@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import './login.scss'
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -9,16 +10,14 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { DELETE, POST } from '../../../../services/api';
+import { getLoginData } from '../../../redux/actions/loginAction';
 
 export default function Login() {
 
     const navigate = useNavigate()
-
-    const LoginCred = {
-        mobNum: '7840054376',
-        password: 'xyz123'
-    }
-
+    const dispatch = useDispatch()
+    const [eyeIcon, setEyeIcon] = useState(false);
     const [loginEntry, setLoginEntry] = useState({});
 
     function handleChange(event) {
@@ -30,23 +29,46 @@ export default function Login() {
             }
         })
     }
-
-    function submitLogin(event) {
+    // 9540952030
+    // Test@777
+    // login Authentication
+    async function submitLogin(event) {
         event.preventDefault();
-        if (JSON.stringify(LoginCred) === JSON.stringify(loginEntry)) {
-            localStorage.setItem("accessToken", JSON.stringify(loginEntry.mobNum))
+        let payload = {
+            mobile: loginEntry.mobNum,
+            password: loginEntry.password
+        };
+        const res = await POST("/user/session", payload);
+        if (res.data.success) {
+            localStorage.setItem("ACCESS_TOKEN", res.data.result.token)
+            // localStorage.setItem("USER_TYPE", res.data.result.user_type)
             toast.success("Login Successful")
             setTimeout(() => {
                 navigate("/dashboard")
             }, 1500);
+            dispatch(getLoginData(res.data.result))            
+            console.log(res.data.result)
+            // document.getElementById("loginBtn").disabled = "true"
         }
         else {
-            navigate("/login")
-            toast.error("Inavlid User Credentials")
+            navigate("/")
+            toast.error(res.data.message)
         }
     }
 
-    const [eyeIcon, setEyeIcon] = useState(false);
+    // Timer for logout
+    // setTimeout(async () => {
+    //     const res = await DELETE("/user/session")
+    //     console.log(res);
+    //     if (res.data.success) {
+    //         localStorage.removeItem("ACCESS_TOKEN")
+    //         toast.error("Invalid User Token")
+    //         setTimeout(() => {
+    //             navigate("/")
+    //         }, 1500);
+    //     }
+    // }, 1691825004878);
+
 
     function toggleButton() {
         let eyeToggle = document.getElementById('passwordInput');
@@ -82,7 +104,7 @@ export default function Login() {
                     <Box className="ImageBox">
                         <img src={ashokaEmb} alt="ashokaEmb" className='ashokaEmb' />
                     </Box>
-                    <form>
+                    <form onSubmit={submitLogin}>
                         <Stack className='login-form' spacing={2.1}>
                             <label htmlFor='mobNum' >Mobile Number</label>
                             <input onChange={handleChange} onInput={onlyNumeric} className='input-Class' id="mobNum" type='tel' name='mobNum' placeholder='Enter Mobile Number' maxLength={10} autoComplete='off'></input>
@@ -93,7 +115,7 @@ export default function Login() {
                                     {(eyeIcon) ? <RemoveRedEyeIcon onClick={toggleButton} className='eyeIcon' fontSize='small' /> : <VisibilityOffIcon onClick={toggleButton} className='eyeIcon' fontSize='small' />}
                                 </Box>
                             </Grid>
-                            <button onClick={submitLogin}>Login</button>
+                            <button id="loginBtn">Login</button>
                         </Stack>
                     </form>
                 </Stack>

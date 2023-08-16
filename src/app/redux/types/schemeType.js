@@ -1,0 +1,1 @@
+export const GET_SCHEME_DATA = "GET_SCHEME_DATA"

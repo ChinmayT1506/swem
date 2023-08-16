@@ -1,12 +1,12 @@
 import { Grid } from '@mui/material'
 import React from 'react'
 import './LocateOnMap.scss'
-import { Stack } from 'react-bootstrap'
 import { MapLocator } from '../../../components/Maps/LocateMap'
+import { useSelector } from 'react-redux'
 
 export const LocateOnMap = () => {
 
-    const districtOptions = ["Srinagar", "Anantang", "Budgam"]
+    const district_List = useSelector(state => state.getDistrictsData.DistrictDataArr)
 
     return (
         <Grid className='locateOnMap-Container'>
@@ -14,8 +14,8 @@ export const LocateOnMap = () => {
                 <label>District</label>
                 <select name="district" id="district">
                     {
-                    districtOptions.map(item => {
-                        return <option>{item}</option>
+                    district_List.map(item => {
+                        return <option value={item.district}>{item.district}</option>
                     })
                 }
                 </select>

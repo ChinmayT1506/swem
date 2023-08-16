@@ -1,0 +1,2 @@
+export const GET_LOGIN_DATA = "GET_LOGIN_DATA"
+export const DELETE_LOGIN_DATA = "DELETE_LOGIN_DATA"

@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './profile.scss'
 import { Box, Grid, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { GET } from '../../../../services/api';
+import { useSelector } from 'react-redux';
 
 export default function Profile() {
-    const isAdmin = true;
+
+    const navigate = useNavigate();
+    const [profileData, setProfileData] = useState({});
+
+    const USER = useSelector(state => state?.getLogindata?.loginData.user_type)
+    const isAdmin = (USER === "HOD")
+
+    const getProfile = async () => {
+        const res = await GET("/user/profile")
+        if (res.data.success) {
+            setProfileData(res?.data?.result);
+        }
+        else if (res.status === 401) {
+            toast.error("Inavlid User token")
+            localStorage.removeItem("ACCESS_TOKEN")
+            setTimeout(() => {
+                navigate("/")
+            }, 1500);
+        }
+    }
+    useEffect(() => {
+        getProfile()
+    }, []);
+
     return (
         <>
             <Grid className='Profile-Container'>
@@ -14,9 +41,9 @@ export default function Profile() {
                     {isAdmin ?
                         <Stack className='form-main' spacing={2}>
                             <label for='ProfileName'>Name</label>
-                            <input disabled="disabled" value="ajit" type='text' name='ProfileName'></input>
+                            <input disabled="disabled" value={profileData.name} type='text' name='ProfileName'></input>
                             <label for='mobileNum'>Mobile Number</label>
-                            <input disabled="disabled" value="7840054376" id='tel' type='tel' name='mobileNum'></input>
+                            <input disabled="disabled" value={profileData.mobile} id='tel' type='tel' name='mobileNum'></input>
                         </Stack> :
 
                         <Stack className='form-main' spacing={2}>

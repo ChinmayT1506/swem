@@ -26,13 +26,20 @@ import DirectionsIcon from '@mui/icons-material/Directions';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { DELETE } from '../../../services/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { delLoginData } from '../../redux/actions/loginAction';
 
 export default function Sidebar() {
+
+    const dispatch = useDispatch();
+    const USER = useSelector(state => state?.getLogindata?.loginData.user_type)
+    const isAdmin = (USER === "HOD")
+
     const navigate = useNavigate();
     const [isCollapse, setCollapse] = useState(false);
     const [isCollapse2, setCollapse2] = useState(false);
     const [isCollapse3, setCollapse3] = useState(false);
-    const isAdmin = true;
 
     function Collapser() {
         if (isCollapse2 || isCollapse3) {
@@ -58,13 +65,17 @@ export default function Sidebar() {
         setCollapse3(!isCollapse3)
     }
 
-    function logout() {
-        localStorage.removeItem("accessToken")
-        toast.success("User Logged Out Successfully")
-        setTimeout(() => {
-            navigate("/login")
-        }, 1500);
-
+    async function logout() {
+        const res = await DELETE("/user/session")
+        console.log(res);
+        dispatch(delLoginData)
+        if(res.data.success){
+            localStorage.removeItem("ACCESS_TOKEN")
+            toast.success("User Logged Out Successfully")
+            setTimeout(() => {
+                navigate("/")
+            }, 1500);
+        }
     }
 
     return (
@@ -171,7 +182,7 @@ export default function Sidebar() {
                             </NavLink>
                             {isAdmin ?
                                 <NavLink to='/users/hod' >
-                                    <ListItem className="list-item-wrapper" disablePadding sx={{ display: 'block' }}>
+                                    <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
                                         <ListItemButton
                                             sx={{
                                                 minHeight: 40,
@@ -292,26 +303,28 @@ export default function Sidebar() {
                     </List>
                     <Collapse in={isCollapse2} timeout="auto" unmountOnExit>
                         <List className='List'>
-                            <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 40,
-                                        justifyContent: 'initial',
-                                        px: 1.7,
-                                    }}
-                                >
-                                    <ListItemIcon
+                            <NavLink to="geospatial-calculator">
+                                <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: 3,
-                                            justifyContent: 'center',
+                                            minHeight: 40,
+                                            justifyContent: 'initial',
+                                            px: 1.7,
                                         }}
                                     >
-                                        <MapIcon />
-                                    </ListItemIcon>
-                                    <ListItemText className="list-text" primary="Geospatial Calculator" sx={1} />
-                                </ListItemButton>
-                            </ListItem>
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: 3,
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <MapIcon />
+                                        </ListItemIcon>
+                                        <ListItemText className="list-text" primary="Geospatial Calculator" sx={1} />
+                                    </ListItemButton>
+                                </ListItem>
+                            </NavLink>
                             <NavLink to="/locate-on-map">
                                 <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton

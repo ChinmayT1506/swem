@@ -1,21 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import './table.scss'
-import { Box, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import ReplyIcon from '@mui/icons-material/Reply';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { DELETE } from '../../../services/api';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function BasicTable({ data, tableHead, tableName, handleOpen }) {
 
-    const isAdmin = true;
+    const USER = useSelector(state => state?.getLogindata?.loginData[0])
+    const USER_TYPE = USER?.user_type
+    const isAdmin = (USER_TYPE === "HOD")
+    // console.log(isAdmin)
+
+    function DeleteItemFunc(item, tableName) {
+        const res = DELETE(`/officer/${tableName}?${tableName}Id=${item}`)
+        console.log(res);
+        toast.success(`${tableName} deleted`)
+    }
 
     const navigate = useNavigate();
 
     const nthData = data[0] ?? ''
     // console.log("obj is ", Object?.keys(nthData));
     const tableHeader = Object?.keys(nthData);
+    // console.log(tableHeader)
+
 
     return (
         <>
@@ -32,54 +46,54 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                     </thead>
                     <tbody>
                         {
-                            // data.map((item, index) => (
+                            // data?.map((item, index) => (
                             //     <tr key={index}>
                             //         {Object.values(item).map((item, index) => {
                             //             return <td>{item}</td>
                             //         })}
                             //     </tr>
                             // ))
-                            (tableName === "Schemes" ?
-                                data.map((item, index) => (
+                            (tableName === "scheme" ?
+                                data?.map((item, index) => (
                                     <tr key={index}>
-                                        <td>{item.first_name}</td>
-                                        <td>scheme</td>
-                                        <td>12</td>
-                                        <td>10</td>
+                                        <td>{item.date_of_commencement.slice(0, 10)}</td>
+                                        <td>{item.scheme_name}</td>
+                                        <td>{item.aa_cost}</td>
+                                        <td>{item.additional_funds_required}</td>
                                         <td style={{ cursor: 'pointer' }}>
-                                            <EditIcon onClick={() => navigate("editScheme")} />
-                                            <DeleteIcon />
+                                            <EditIcon onClick={() => navigate("editScheme", { state: { item } })} />
+                                            <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName)} />
                                         </td>
                                     </tr>
-                                )) : (tableName === "Events" ?
-                                    data.map((item, index) => (
+                                )) : (tableName === "event" ?
+                                    data?.map((item, index) => (
                                         <tr key={index}>
-                                            <td>{item.first_name}</td>
-                                            <td>CHSND</td>
-                                            <td>Poshan Abhiyan</td>
+                                            <td>{item.event_name}</td>
+                                            <td>{item.event_code}</td>
+                                            <td>{item.scheme}</td>
                                             <td><button onClick={() => navigate("/event-occurence")}>Show Occurences</button></td>
                                             <td style={{ cursor: 'pointer' }}>
-                                                <EditIcon onClick={() => navigate("editEvent")} />
-                                                <DeleteIcon />
+                                                <EditIcon onClick={() => navigate("editEvent", { state: { item } })} />
+                                                <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName)} />
                                             </td>
                                         </tr>
-                                    )) : (tableName === "Anganwadi" ?
-                                        data.map((item, index) => (
+                                    )) : (tableName === "anganwadi" ?
+                                        data?.map((item, index) => (
                                             <tr key={index}>
-                                                <td>{item.first_name}</td>
-                                                <td>CHSND</td>
-                                                <td>Poshan Abhiyan</td>
-                                                <td>Poshan Abhiyan</td>
-                                                <td>Poshan Abhiyan</td>
-                                                <td>Poshan Abhiyan</td>
-                                                <td>Show</td>
+                                                <td>{item.name}</td>
+                                                <td>{item.mobile}</td>
+                                                <td>{item.district}</td>
+                                                <td>{item.project}</td>
+                                                <td>{item.awc_name}</td>
+                                                <td>{item.awc_code}</td>
+                                                <td>{item.awc_address}</td>
                                                 <td style={{ cursor: 'pointer' }}>
-                                                    <EditIcon onClick={() => navigate("editAnganwadi")} />
-                                                    <DeleteIcon />
+                                                    <EditIcon onClick={() => navigate("editAnganwadi", { state: { item } })} />
+                                                    <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName = "user")} />
                                                 </td>
                                             </tr>
                                         )) : (tableName === "HOD" ?
-                                            data.map((item, index) => (
+                                            data?.map((item, index) => (
                                                 <tr key={index}>
                                                     <td>{item.first_name}</td>
                                                     <td>8393939939</td>
@@ -89,19 +103,19 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                     </td>
                                                 </tr>
                                             )) : (tableName === "CDPO" ?
-                                                data.map((item, index) => (
+                                                data?.map((item, index) => (
                                                     <tr key={index}>
-                                                        <td>{item.first_name}</td>
-                                                        <td>8393939939</td>
-                                                        <td>Baramullah</td>
-                                                        <td>Pattan</td>
+                                                        <td>{item.name}</td>
+                                                        <td>{item.mobile}</td>
+                                                        <td>{item.district}</td>
+                                                        <td>{item.project}</td>
                                                         <td style={{ cursor: 'pointer' }}>
-                                                            <EditIcon onClick={() => navigate("editCdpo")} />
-                                                            <DeleteIcon />
+                                                            <EditIcon onClick={() => navigate("editCdpo", { state: { item } })} />
+                                                            <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName = "user")} />
                                                         </td>
                                                     </tr>
                                                 )) : (tableName === "DPO") ?
-                                                    data.map((item, index) => (
+                                                    data?.map((item, index) => (
                                                         <tr key={index}>
                                                             <td>{item.first_name}</td>
                                                             <td>8393939939</td>
@@ -112,7 +126,7 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                             </td>
                                                         </tr>
                                                     )) : (tableName === "GeoTagAnganwadi") ?
-                                                        data.map((item, index) => (
+                                                        data?.map((item, index) => (
                                                             <tr key={index}>
                                                                 <td>{item.first_name}</td>
                                                                 <td>8393939939</td>
@@ -131,7 +145,7 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                                 </td>
                                                             </tr>
                                                         )) : (tableName === "Event-Occurence") ?
-                                                            data.map((item, index) => (
+                                                            data?.map((item, index) => (
                                                                 <tr key={index}>
                                                                     <td>{item.first_name}</td>
                                                                     <td>8393939939</td>
@@ -155,8 +169,8 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                                     <td>Completed</td>
                                                                     {
                                                                         isAdmin ?
-                                                                        <td onClick={() => navigate("/query/replyQuery")}><ReplyIcon sx={{cursor: 'pointer'}}/></td>
-                                                                        : <td onClick={() => navigate("/query/replyQuery")}><VisibilityIcon sx={{cursor: 'pointer'}}/></td>
+                                                                            <td onClick={() => navigate("/query/replyQuery")}><ReplyIcon sx={{ cursor: 'pointer' }} /></td>
+                                                                            : <td onClick={() => navigate("/query/replyQuery")}><VisibilityIcon sx={{ cursor: 'pointer' }} /></td>
                                                                     }
                                                                 </tr> : ""
                                             )
@@ -167,14 +181,14 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                     </tbody>
                 </table>
             </Grid >
-            <Grid className="table-footer">
+            {/* <Grid className="table-footer">
                 <p>Rows per page</p>
                 <select name="row-select">
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
                 </select>
-            </Grid>
+            </Grid> */}
         </>
     )
 }

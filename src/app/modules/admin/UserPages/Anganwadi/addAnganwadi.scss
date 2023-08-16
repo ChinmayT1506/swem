@@ -19,11 +19,35 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        input{
+        .passwordInput {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 97.7%;
+            border: 1px solid rgb(113, 111, 111);
+            border-radius: 5px;
+            input {
+                width: 93%;
+                border: none;
+                font-size: 1rem;
+                color: rgb(8, 7, 7);
+                &::placeholder {
+                    font-size: 1rem;
+                    opacity: 0.7;
+                }
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+        select, input, option, textarea{
             font-size: 1rem;
             padding: 0rem 1rem;
             height: 3rem;
             width: 95%;
+        }
+        select, option{
+            width: 97.5%;
         }
         .submitForm{
             width: 100%;
@@ -56,4 +80,6 @@
     label{
         font-size: 0.9rem;
     }
+    // select, option{
+    // }
 }

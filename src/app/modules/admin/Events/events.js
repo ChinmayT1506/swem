@@ -1,43 +1,75 @@
-import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import './events.scss'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import BasicTable from '../../../components/table/table';
+import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Stack } from '@mui/material'
+import { useNavigate } from 'react-router-dom';
+import { GET } from '../../../../services/api';
+import { getEventData } from '../../../redux/actions/eventAction';
+import { useDispatch, useSelector } from 'react-redux';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import { toast } from 'react-toastify';
+import './events.scss'
 
 export const Events = () => {
 
-    const [searchInput, setSearchInput] = useState("");
-    let [data, setData] = useState([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    const storedData = useSelector(state => state.getEventdata.EventDataArr)
 
-    // Get data
-    useEffect(() => {
-        (async function () {
-            try {
-                const response = await axios.get(
-                    "https://reqres.in/api/users?page=2"
-                );
-                setData(response.data.data);
-                console.log(response.data.data);
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-    }, []);
+    const [searchInput, setSearchInput] = useState({
+        eventFilter: "all"
+    });
+    let [Eventdata, setEventData] = useState([]);
 
-    // Search Input Filter
     function handleChangeSearch(event) {
-        setSearchInput(event.target.value);
-    }
-    if (searchInput) {
-        data = data.filter((item) => {
-            if (item.first_name.toLowerCase().includes(searchInput.toLowerCase())) {
-                return item
+        const { name, value } = event.target;
+        setSearchInput(prevValue => {
+            return {
+                ...prevValue,
+                [name]: value
             }
         })
+        console.log(searchInput)
     }
+
+    // Get Data
+    const getEvents = async () => {
+        if (!searchInput.searchInput) {
+            const res = await GET("/officer/event",
+                {
+                    searchKey: searchInput.eventFilter,
+                    searchValue: searchInput.searchInput,
+                    page: 1,
+                    size: 10,
+                    // sort: "name",
+                    // sortOrder: "ASC"
+                }
+            )
+            if (res.data.success) {
+                setEventData(res?.data?.result?.data)
+                dispatch(getEventData(res?.data?.result))
+            }
+            else if (res.status === 401) {
+                toast.error("Inavlid User token")
+                localStorage.removeItem("ACCESS_TOKEN")
+                setTimeout(() => {
+                    navigate("/")
+                }, 1500);
+            }
+        }
+        else {
+            const res = await GET(`/officer/event?searchKey=${searchInput.eventFilter}&searchValue=${searchInput.searchInput}&page=1&size=10&sort=name&sortOrder=ASC`)
+            if (res.data.success) {
+                setEventData(res?.data?.result?.data)
+            }
+        }
+    }
+    useEffect(() => {
+        getEvents()
+    }, [Eventdata]);
 
     let tableHead = [
         "Event Name",
@@ -56,7 +88,7 @@ export const Events = () => {
                 </Grid>
                 <Grid className='Events-inner-2'>
                     <Box className='search'>
-                        <input className='search-input' placeholder='Search' onChange={handleChangeSearch} />
+                        <input className='search-input' placeholder='Search' onChange={handleChangeSearch} name="searchInput" />
                         <FormControl fullWidth className="action">
                             <InputLabel id="filterlabel">Event Filter</InputLabel>
                             <Select
@@ -64,17 +96,35 @@ export const Events = () => {
                                 id="select"
                                 // value=""
                                 label="All"
-                            // onChange={handleChange}
+                                name="eventFilter"
+                                onChange={handleChangeSearch}
                             >
-                                <MenuItem value="All">All</MenuItem>
-                                <MenuItem value="Event-Name">Event-Name</MenuItem>
+                                <MenuItem value="all">All</MenuItem>
+                                <MenuItem value="event_name">Event Name</MenuItem>
+                                <MenuItem value="event_code">Event Code</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
                 </Grid>
-                <BasicTable data={data} tableHead={tableHead} tableName="Events" />
+                <BasicTable data={Eventdata ?? []} tableHead={tableHead} tableName="event" />
+                <Grid className="table-footer">
+                    <p>Rows per page</p>
+                    <select name="row-select">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                    <p>
+                        1-{storedData.count} of {storedData.count}
+                    </p>
+                    <Grid className='pagination'>
+                        <p><SkipPreviousIcon /></p>
+                        <p><NavigateBeforeIcon /></p>
+                        <p><NavigateNextIcon /></p>
+                        <p><SkipNextIcon /></p>
+                    </Grid>
+                </Grid>
             </Stack>
-
         </Grid>
     )
 }
