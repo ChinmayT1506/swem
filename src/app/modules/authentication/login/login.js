@@ -107,7 +107,7 @@ export default function Login() {
                     <form onSubmit={submitLogin}>
                         <Stack className='login-form' spacing={2.1}>
                             <label htmlFor='mobNum' >Mobile Number</label>
-                            <input onChange={handleChange} onInput={onlyNumeric} className='input-Class' id="mobNum" type='tel' name='mobNum' placeholder='Enter Mobile Number' maxLength={10} autoComplete='off'></input>
+                            <input onChange={handleChange} onInput={onlyNumeric} className='input-Class' id="mobNum" type='tel' name='mobNum' placeholder='Enter Mobile Number' maxLength={10}></input>
                             <label htmlFor='password'>Password</label>
                             <Grid className='passwordInput'>
                                 <input onChange={handleChange} className='password-input-Class' id='passwordInput' type='password' name='password' placeholder='Enter Password'></input>

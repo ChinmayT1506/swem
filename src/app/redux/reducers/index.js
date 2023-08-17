@@ -8,5 +8,5 @@ export const reducers = combineReducers({
     getLogindata: getLoginData,
     getSchemedata: getSchemeData,
     getEventdata: getEventData,
-    getDistrictsData: getDistrictsData
+    getDistrictsData: getDistrictsData,
 })

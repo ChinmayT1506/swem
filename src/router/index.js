@@ -78,7 +78,6 @@ export const Mainroute = () => {
                             <Route path="/profile" element={<Profile />} />
                             <Route path="/changePassword" element={<ChangePasswordScreen />} />
                             <Route path="/query" element={<QueryManagement />} />
-                            <Route path="/query/addQuery" element={<AddQueryForm />} />
                             <Route path="/query/replyQuery" element={<ReplyQueryForm />} />
                             <Route path="/locate-on-map" element={<LocateOnMap />} />
                             <Route path="/geospatial-calculator" element={<GeospatialCalculator />} />

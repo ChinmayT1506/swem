@@ -47,6 +47,15 @@ export const PUT = async (url, body, options) => {
     }
 };
 
+export const PATCH = async (url, body, options) => {
+    try {
+        let result = await axiosInstance.patch(url, body, options);
+        return result;
+    } catch (error) {
+        return error?.response;
+    }
+};
+
 export const DELETE = async (url, params, data) => {
     try {
         let result = await axiosInstance.delete(url, { params, data });

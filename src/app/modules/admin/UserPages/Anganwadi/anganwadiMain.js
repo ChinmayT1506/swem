@@ -9,9 +9,13 @@ import { CSVLink } from 'react-csv'
 import BasicTable from '../../../../components/table/table';
 import { GET } from '../../../../../services/api';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import './anganwadiMain.scss'
 
 export const Anganwadi = () => {
+
+    const USER = useSelector(state => state?.getLogindata?.loginData.user_type)
+    const isAdmin = (USER === "HOD")
 
     let [count, setCount] = useState(0);
 
@@ -129,10 +133,13 @@ export const Anganwadi = () => {
             <Stack className='Anganwadi-inner' spacing={2}>
                 <Grid className='Anganwadi-inner-1'>
                     <h2>Anganwadi</h2>
-                    <Grid className='Anganwadi-ButtonBox'>
-                        <button><CSVLink className="link" data={anganwadiData} >Download</CSVLink></button>
-                        <button onClick={() => navigate('addAnganwadi')}>Add Aanganwadi User</button>
-                    </Grid>
+                    {isAdmin ?
+                        <Grid className='Anganwadi-ButtonBox'>
+                            <button><CSVLink className="link" data={anganwadiData} >Download</CSVLink></button>
+                            <button onClick={() => navigate('addAnganwadi')}>Add Aanganwadi User</button>
+                        </Grid>
+                        : ""
+                    }
                 </Grid>
                 <Grid className='Anganwadi-inner-2'>
                     <Box className='search'>

@@ -142,6 +142,7 @@ export const CDPO = () => {
                             <Select
                                 labelId="filterlabel"
                                 id="select"
+                                name="eventFilter"  
                                 // value=""
                                 label="All"
                                 onChange={handleChangeSearch}

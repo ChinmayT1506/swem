@@ -4,7 +4,7 @@ import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Stack } from '@mu
 import { useNavigate } from 'react-router-dom';
 import { GET } from '../../../../services/api';
 import { getEventData } from '../../../redux/actions/eventAction';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import SkipNextIcon from '@mui/icons-material/SkipNext';

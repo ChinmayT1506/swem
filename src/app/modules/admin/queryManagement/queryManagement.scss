@@ -4,9 +4,11 @@
     height: 90vh;
     width: 80vw;
     background-color: rgb(241, 241, 241);
+
     .queryManagement-inner {
         height: 100%;
         width: 100%;
+
         .queryManagement-inner-1 {
             display: flex;
             justify-content: space-between;
@@ -52,10 +54,40 @@
                     font-size: 1.2rem;
                     border: 1px solid rgb(148, 139, 139);
                 }
-                .action{
+
+                .action {
                     border-radius: 3px;
                     border: 1px solid rgb(148, 139, 139);
                     background-color: #fff;
+                }
+            }
+        }
+
+        .table-footer {
+            background-color: #fff;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+
+            select {
+                font-size: 0.9rem;
+                outline: none;
+                border: none;
+                background-color: transparent;
+                margin: 0rem 1rem;
+            }
+
+            .pagination {
+                display: flex;
+                margin-right: 2rem;
+                padding-left: 1rem;
+
+                button {
+                    background-color: transparent;
+                    border: none;
+                    cursor: pointer;
                 }
             }
         }
@@ -66,26 +98,32 @@
     .queryManagement-main {
         width: 100%;
         padding: 3rem 1.1rem;
+
         .queryManagement-inner {
             .queryManagement-inner-1 {
-                h2{
+                h2 {
                     font-size: 1.2rem;
                 }
+
                 button {
                     width: 33%;
                     font-size: 0.8rem;
                 }
             }
+
             .queryManagement-inner-2 {
                 height: 10%;
                 width: 100%;
+
                 .search {
                     width: 100%;
                     font-size: 0.7rem;
+
                     .search-input {
                         margin-right: 1rem;
                         font-size: 1rem;
                     }
+
                     .action {
                         font-size: 1rem;
                     }
@@ -95,5 +133,3 @@
 
     }
 }
-
-

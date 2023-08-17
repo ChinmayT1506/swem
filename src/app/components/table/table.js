@@ -12,10 +12,8 @@ import { toast } from 'react-toastify';
 
 function BasicTable({ data, tableHead, tableName, handleOpen }) {
 
-    const USER = useSelector(state => state?.getLogindata?.loginData[0])
-    const USER_TYPE = USER?.user_type
-    const isAdmin = (USER_TYPE === "HOD")
-    // console.log(isAdmin)
+    const USER = useSelector(state => state?.getLogindata?.loginData.user_type)
+    const isAdmin = (USER === "HOD")
 
     function DeleteItemFunc(item, tableName) {
         const res = DELETE(`/officer/${tableName}?${tableName}Id=${item}`)
@@ -83,7 +81,7 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                 <td>{item.name}</td>
                                                 <td>{item.mobile}</td>
                                                 <td>{item.district}</td>
-                                                <td>{item.project}</td>
+                                                <td>{item.block}</td>
                                                 <td>{item.awc_name}</td>
                                                 <td>{item.awc_code}</td>
                                                 <td>{item.awc_address}</td>
@@ -111,7 +109,7 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                             <td>{item.name}</td>
                                                             <td>{item.mobile}</td>
                                                             <td>{item.district}</td>
-                                                            <td>{item.project}</td>
+                                                            <td>{item.block}</td>
                                                             <td style={{ cursor: 'pointer' }}>
                                                                 <EditIcon onClick={() => navigate("editCdpo", { state: { item } })} />
                                                                 <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName = "user")} />
@@ -132,20 +130,22 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                         )) : (tableName === "GeoTagAnganwadi") ?
                                                             data?.map((item, index) => (
                                                                 <tr key={index}>
-                                                                    <td>{item.first_name}</td>
-                                                                    <td>8393939939</td>
-                                                                    <td>Baram</td>
-                                                                    <td>Baram</td>
-                                                                    <td>Baram</td>
-                                                                    <td>HDGHG</td>
-                                                                    <td>Baram</td>
-                                                                    <td>94.4533</td>
-                                                                    <td>79.8833</td>
-                                                                    <td>HOD</td>
-                                                                    <td>Pending</td>
+                                                                    <td>{item.name}</td>
+                                                                    <td>{item.mobile}</td>
+                                                                    <td>{item.district}</td>
+                                                                    <td>{item.block}</td>
+                                                                    <td>{item.awc_name}</td>
+                                                                    <td>{item.awc_code}</td>
+                                                                    <td>{item.awc_address}</td>
+                                                                    <td>{item.longitude}</td>
+                                                                    <td>{item.latitude}</td>
+                                                                    <td>{item.updated_by}</td>
+                                                                    <td>{item.status}</td>
                                                                     <td style={{ cursor: 'pointer' }}>
-                                                                        <button onClick={handleOpen}>Show on Map</button>
-                                                                        <EditIcon onClick={() => navigate("editGeoTagAnganwadi")} />
+                                                                        <span onClick={() => navigate("/users/geoTagAnganwadi", {state: {item}})}>
+                                                                            <button onClick={handleOpen}>Show on Map</button>
+                                                                        </span>
+                                                                        <EditIcon onClick={() => navigate("editGeoTagAnganwadi", { state: { item } })} />
                                                                     </td>
                                                                 </tr>
                                                             )) : (tableName === "Event-Occurence") ?
@@ -162,21 +162,24 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                                             <button onClick={() => navigate("/show-event-occurence", { state: { lat: 28.6081, long: 77.3723 } })}>Show</button>
                                                                         </td>
                                                                     </tr>
-                                                                )) : (tableName = "QueryManagement") ?
-                                                                    <tr>
-                                                                        <td>8Shyam</td>
-                                                                        <td>Not able to edit the Record of any Anganwadi Centre</td>
-                                                                        <td>When i open the record of Anganwadi Centre in edit mode by clicking on edit button, and after making changes in the reocrd like changing Phone Number or any other attribute or even without any change in record when i click on submit button the record did not get submit and shows the error "Negative value is not allowed" just below the field of Phone No.</td>
-                                                                        <td>Kathua</td>
-                                                                        <td>Kathua</td>
-                                                                        <td>08-08-2023</td>
-                                                                        <td>Completed</td>
-                                                                        {
-                                                                            isAdmin ?
-                                                                                <td onClick={() => navigate("/query/replyQuery")}><ReplyIcon sx={{ cursor: 'pointer' }} /></td>
-                                                                                : <td onClick={() => navigate("/query/replyQuery")}><VisibilityIcon sx={{ cursor: 'pointer' }} /></td>
-                                                                        }
-                                                                    </tr> : ""
+                                                                )) :
+                                                                (tableName = "QueryManagement") ?
+                                                                    data?.map((item, index) => (
+                                                                        <tr key={index}>
+                                                                            <td>{item.createdBy}</td>
+                                                                            <td>{item.subject}</td>
+                                                                            <td>{item.message}</td>
+                                                                            <td>{item.district}</td>
+                                                                            <td>{item.block}</td>
+                                                                            <td>{item.createdAt.slice(0, 10)}</td>
+                                                                            <td>{item.status}</td>
+                                                                            {
+                                                                                isAdmin ?
+                                                                                    <td onClick={() => navigate("/query/replyQuery", { state: { item } })}><ReplyIcon sx={{ cursor: 'pointer' }} /></td>
+                                                                                    : <td onClick={() => navigate("/query/replyQuery", { state: { item } })}><VisibilityIcon sx={{ cursor: 'pointer' }} /></td>
+                                                                            }
+                                                                        </tr>
+                                                                    )) : ""
                                                 )
                                         ))
                                 )
@@ -198,3 +201,6 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
 }
 
 export default BasicTable
+
+
+

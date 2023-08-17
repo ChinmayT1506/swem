@@ -30,9 +30,9 @@ export default function AddEventForm() {
     async function handleSubmit(event) {
         event.preventDefault();
         const res = await POST("/officer/event", {
-            "name": entry.EventName,
-            "code": entry.EventCode,
-            "schemeId": entry.associateScheme
+            name: entry.EventName,
+            code: entry.EventCode,
+            schemeId: entry.associateScheme
         })
         console.log(res)
         if (res.data.success) {

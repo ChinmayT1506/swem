@@ -13,7 +13,6 @@ export default function AddAnganwadiForm() {
 
     const navigate = useNavigate();
     const [entry, setEntry] = useState({});
-    const [currDistrictId, setCurrDistrictId] = useState("");
     const [eyeIcon, setEyeIcon] = useState(false);
     const [eyeIcon2, setEyeIcon2] = useState(false);
 
@@ -105,7 +104,7 @@ export default function AddAnganwadiForm() {
                                 onChange={handleChange}
                             >
                                 {district_List.map(item => (
-                                    <option value={item.district} onClick={() => setCurrDistrictId(item._id)}>{item.district}</option>
+                                    <option value={item.district}>{item.district}</option>
                                 ))}
                             </select>
                             <label for='project'>Project</label>

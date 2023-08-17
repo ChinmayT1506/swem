@@ -1,5 +1,4 @@
 import { GET } from '../services/api'
-import { getDistrictsData } from '../app/redux/reducers/districtsReducer';
 
 export const Master_District = async () => {
     try {

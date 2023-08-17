@@ -5,11 +5,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { PUT } from '../../../../services/api';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 export default function EditEventForm() {
 
     const navigate = useNavigate();
     const location = useLocation()
+
+    const scheme_List = useSelector(state => state.getSchemedata.schemeDataArr.data)
 
     const [entry, setEntry] = useState(location.state.item);
 
@@ -27,7 +30,8 @@ export default function EditEventForm() {
         event.preventDefault();
         const res = await PUT(`officer/event?eventId=${entry._id}`, {
             "name": entry.event_name,
-            "code": entry.event_code
+            "code": entry.event_code,
+
         })
         console.log(res)
         if (res.data.success) {
@@ -77,15 +81,21 @@ export default function EditEventForm() {
                                 onChange={HandleChange}
                             >
                             </input>
-                            <label for='related_scheme'>Date of Commencement of Event</label>
-                            <input
-                                className=''
-                                type='date'
-                                name='related_scheme'
-                                value={entry.createdAt.slice(0, 10)}
+                            <label for='related_scheme'>Related Scheme</label>
+                            <select
+                                labelId="associateSchemeIdlabel"
+                                id="select"
+                                name='scheme_id'
+                                value={entry.schemeId}
+                                label=""
                                 onChange={HandleChange}
                             >
-                            </input>
+                                <option value="none" selected disabled hidden>{entry.schemeId}</option>
+                                {scheme_List.map(item => (
+                                    <option value={item._id}>{item.scheme_name}</option>
+                                ))}
+                            </select>
+
                             <Grid className='submitForm'>
                                 <button type="button" onClick={() => navigate(-1)}>Cancel</button>
                                 <button type="submit">Submit</button>

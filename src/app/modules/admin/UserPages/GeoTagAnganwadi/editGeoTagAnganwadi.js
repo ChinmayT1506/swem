@@ -1,14 +1,35 @@
-import React from 'react';
-import './editGeoTagAnganwadi.scss'
+import React, { useEffect, useState } from 'react';
 import { Box, Grid, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import './editGeoTagAnganwadi.scss'
+import { useSelector } from 'react-redux';
+import { Master_Project } from '../../../../../utils/master-project';
 
 
 export default function EditGeoTagForm() {
 
     const navigate = useNavigate();
+    const district_List = useSelector(state => state.getDistrictsData.DistrictDataArr)
+    const [entry, setEntry] = useState({});
+    const [currDistrictId, setCurrDistrictId] = useState("");
+
+    useEffect(() => {
+        Master_Project(currDistrictId).then(res =>{
+            const block_list = res
+        })
+    })
+
+    function handleChange(event) {
+        const { name, value } = event.target;
+        setEntry(item => {
+            return {
+                ...item,
+                [name]: value
+            };
+        });
+    }
 
     // post data
     async function handlesubmit() {
@@ -33,25 +54,36 @@ export default function EditGeoTagForm() {
                     <Stack className='form-main' spacing={2}>
 
                         <label for='EditGeoTagName'>Name</label>
-                        <input type='text' name='AnganwadiName' autoComplete='off'></input>
+                        <input disabled="disabled" type='text' name='AnganwadiName' autoComplete='off'></input>
 
                         <label for='approvalCost'>Mobile Number</label>
-                        <input className='' id='passwordInput' type='number' name='approvalCost'></input>
+                        <input disabled="disabled" className='' id='passwordInput' type='number' name='approvalCost'></input>
 
-                        <label for='district'>District</label>
-                        <input type='text' name='district' autoComplete='off'></input>
+                        <label>District</label>
+                        <select
+                                disabled="disabled"
+                                labelId="filterlabel"
+                                id="select"
+                                name='district'
+                                label="All"
+                                onChange={handleChange}
+                            >
+                                {district_List.map(item => (
+                                    <option value={item.district}  onClick={() => setCurrDistrictId(item._id)}>{item.district}</option>
+                                ))}
+                            </select>
 
                         <label for='project'>Project</label>
                         <input className='' id='project' type='text' name='project'></input>
 
                         <label for='sector'>Sector</label>
-                        <input className='' id='sector' type='number' name='sector'></input>
+                        <input disabled="disabled" className='' id='sector' type='number' name='sector'></input>
 
                         <label for='anganwadiCentre'>Anganwadi Centre Name</label>
-                        <input className='' type='text' name='anganwadiCentre'></input>
+                        <input disabled="disabled" className='' type='text' name='anganwadiCentre'></input>
 
                         <label for='anganwadiCentreCode'>Anganwadi Centre Code</label>
-                        <input className='' id='anganwadiCentreCode' type='text' name='anganwadiCentreCode'></input>
+                        <input disabled="disabled" className='' id='anganwadiCentreCode' type='text' name='anganwadiCentreCode'></input>
 
                         <label for='anganwadiCentreCode'>Anganwadi Centre Address</label>
                         <input className='' id='anganwadiCentreCode' type='textarea' rows="3" name='anganwadiCentreCode'></input>
