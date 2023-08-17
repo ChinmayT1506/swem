@@ -17,12 +17,48 @@ export const Events = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const storedData = useSelector(state => state.getEventdata.EventDataArr)
+    let [Eventdata, setEventData] = useState([]);
+    let [count, setCount] = useState(0);
+    let [countOfData, setCountofData] = useState({});
+    const [pageSize, setPageSize] = useState(10)
 
     const [searchInput, setSearchInput] = useState({
         eventFilter: "all"
     });
-    let [Eventdata, setEventData] = useState([]);
+    const [pagination, setPagination] = useState({
+        pageNum: 1,
+    })
+
+
+    const handlePaginationClick = (event) => {
+        if (event.target.id === "prevPage") {
+            if (pagination.pageNum > 1) {
+                setPagination({
+                    pageNum: pagination.pageNum - 1
+                })
+                setCount(count -= 1)
+            }
+        }
+        else if (event.target.id === "nextPage") {
+            if (pagination.pageNum < countOfData.countOfPages) {
+                setPagination({
+                    pageNum: pagination.pageNum + 1
+                })
+                setCount(count += 1)
+            }
+        } else if (event.target.id === "skipFirst") {
+            setPagination({
+                pageNum: 1
+            })
+            setCount(0)
+        }
+        else if (event.target.id === "skipLast") {
+            setPagination({
+                pageNum: countOfData.countOfPages
+            })
+            setCount(countOfData.countOfPages - 1)
+        }
+    }
 
     function handleChangeSearch(event) {
         const { name, value } = event.target;
@@ -35,36 +71,42 @@ export const Events = () => {
         console.log(searchInput)
     }
 
+    const handleChangePageSize = (event) => {
+        setPageSize(event.target.value)
+    }
+
     // Get Data
     const getEvents = async () => {
-        if (!searchInput.searchInput) {
-            const res = await GET("/officer/event",
-                {
-                    searchKey: searchInput.eventFilter,
-                    searchValue: searchInput.searchInput,
-                    page: 1,
-                    size: 10,
-                    // sort: "name",
-                    // sortOrder: "ASC"
-                }
-            )
-            if (res.data.success) {
-                setEventData(res?.data?.result?.data)
-                dispatch(getEventData(res?.data?.result))
+        const res = await GET("/officer/event",
+            {
+                searchKey: searchInput.eventFilter,
+                searchValue: searchInput.searchInput,
+                page: 1,
+                size: 10,
+                page: pagination.pageNum,
+                size: pageSize,
             }
-            else if (res.status === 401) {
-                toast.error("Inavlid User token")
-                localStorage.removeItem("ACCESS_TOKEN")
-                setTimeout(() => {
-                    navigate("/")
-                }, 1500);
-            }
+        )
+        if (res.data.success) {
+            setEventData(res?.data?.result?.data)
+            setCountofData({
+                countOfPages: Math.ceil(res?.data?.result?.count / pageSize),
+                countOfData: res?.data?.result?.count,
+            })
+            dispatch(getEventData(res?.data?.result))
+        }
+        else if (res.status === 401) {
+            toast.error("Inavlid User token")
+            localStorage.removeItem("ACCESS_TOKEN")
+            setTimeout(() => {
+                navigate("/")
+            }, 1500);
+        }
+        else if (res.status === 400) {
+            toast.error("Failed to Fetch Data")
         }
         else {
-            const res = await GET(`/officer/event?searchKey=${searchInput.eventFilter}&searchValue=${searchInput.searchInput}&page=1&size=10&sort=name&sortOrder=ASC`)
-            if (res.data.success) {
-                setEventData(res?.data?.result?.data)
-            }
+            toast.error(res.data.message)
         }
     }
     useEffect(() => {
@@ -109,19 +151,19 @@ export const Events = () => {
                 <BasicTable data={Eventdata ?? []} tableHead={tableHead} tableName="event" />
                 <Grid className="table-footer">
                     <p>Rows per page</p>
-                    <select name="row-select">
+                    <select name="row-select" onChange={handleChangePageSize}>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                     </select>
                     <p>
-                        1-{storedData.count} of {storedData.count}
+                        {pagination.pageNum + ((count * pageSize) - count)} - {(countOfData.countOfData < pageSize * pagination.pageNum) ? countOfData.countOfData : (pageSize * pagination.pageNum)} of {countOfData.countOfData}
                     </p>
                     <Grid className='pagination'>
-                        <p><SkipPreviousIcon /></p>
-                        <p><NavigateBeforeIcon /></p>
-                        <p><NavigateNextIcon /></p>
-                        <p><SkipNextIcon /></p>
+                        <button><SkipPreviousIcon id="skipFirst" onClick={handlePaginationClick} /></button>
+                        <button><NavigateBeforeIcon id="prevPage" onClick={handlePaginationClick} /></button>
+                        <button><NavigateNextIcon id="nextPage" onClick={handlePaginationClick} name="skipToLast" /></button>
+                        <button><SkipNextIcon id="skipLast" onClick={handlePaginationClick} /></button>
                     </Grid>
                 </Grid>
             </Stack>

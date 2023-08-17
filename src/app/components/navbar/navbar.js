@@ -18,12 +18,11 @@ import { delLoginData } from '../../redux/actions/loginAction';
 
 export const Navbar = () => {
 
-  const USER = useSelector(state => state?.getLogindata?.loginData[0])
-  const USER_TYPE = USER?.user_type
-  console.log(USER_TYPE)
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const USER = useSelector(state => state?.getLogindata?.loginData.user_type)
+  const isAdmin = (USER === "HOD")
 
   async function logout() {
     const res = await DELETE("/user/session")
@@ -34,7 +33,7 @@ export const Navbar = () => {
       toast.success("User Logged Out Successfully")
       setTimeout(() => {
         navigate("/")
-      }, 1500);
+      }, 1000);
     }
   }
 
@@ -97,17 +96,22 @@ export const Navbar = () => {
       </Grid>
       <Grid className='NavLinks hidden' id="NavLinks">
         <NavLink to="/dashboard"><h5>Dashboard</h5></NavLink>
-        <NavLink to="/schemes"><h5>Schemes</h5></NavLink>
-        <NavLink to="/events"><h5>Events</h5></NavLink>
+        {isAdmin ?
+          <NavLink to="/schemes"><h5>Schemes</h5></NavLink>
+          : ""}
+        {isAdmin ?
+          <NavLink to="/events"><h5>Events</h5></NavLink>
+          : ""
+        }
         <Stack className='navStack'>
           <h5 onClick={Collapser}>
             Users {isCollapse ? <ExpandLess /> : <ExpandMore />}
           </h5>
           <Collapse in={isCollapse} timeout="auto" unmountOnExit>
             <NavLink to="users/anganwadi"><h5>Anganwadi</h5></NavLink>
-            <NavLink to="users/hod"><h5>HOD</h5></NavLink>
-            <NavLink to="users/cdpo"><h5>CDPO</h5></NavLink>
-            <NavLink to="users/dpo"><h5>DPO</h5></NavLink>
+            {isAdmin ? <NavLink to="users/hod"><h5>HOD</h5></NavLink> : ""}
+            {isAdmin ? <NavLink to="users/cdpo"><h5>CDPO</h5></NavLink> : ""}
+            {isAdmin ? <NavLink to="users/dpo"><h5>DPO</h5></NavLink> : ""}
             <NavLink to="users/geotagAnganwadi"><h5>Geotag Anganwadi</h5></NavLink>
           </Collapse>
         </Stack>

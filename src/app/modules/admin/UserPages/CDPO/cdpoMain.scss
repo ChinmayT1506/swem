@@ -102,12 +102,6 @@
                     background-color: transparent;
                     border: none;
                     cursor: pointer;
-                    &:last-child:focus{
-                        opacity: 0.3;
-                    }
-                    &:first-child:focus{
-                        opacity: 0.3;
-                    }
                 }
             }
         }
@@ -148,6 +142,16 @@
                     .action {
                         font-size: 1rem;
                     }
+                }
+            }
+            .table-footer {
+                font-size: 0.75rem;
+                select {
+                    font-size: 0.8rem;
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                    margin: 0rem 1rem;
                 }
             }
         }

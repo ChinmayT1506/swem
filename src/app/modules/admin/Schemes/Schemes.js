@@ -13,35 +13,56 @@ import { toast } from 'react-toastify';
 import './schemes.scss'
 
 export const Schemes = () => {
-    
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    let [count, setCount] = useState(0);
 
-    const storedData = useSelector(state => state.getSchemedata.schemeDataArr)
     const [Schemedata, setSchemeData] = useState([]);
+    let [countOfData, setCountofData] = useState({});
     const [searchInput, setSearchInput] = useState({
         schemeFilter: "all"
     });
     const [pagination, setPagination] = useState({
         pageNum: 1,
-        pageSize: 10,
     })
 
-    const handleChangePagination = (event) => {
-        if (event.target.name === "row-select") {
-            setPagination({
-                pageSize: event.target.value
-            })
-        }
-        else if (event.target.name === "prevPage") {
+    const [pageSize, setPageSize] = useState(10)
+
+    const handlePaginationClick = (event) => {
+        if (event.target.id === "prevPage") {
             if (pagination.pageNum > 1) {
                 setPagination({
                     pageNum: pagination.pageNum - 1
                 })
+                setCount(count -= 1)
             }
         }
-    }        
-    
+        else if (event.target.id === "nextPage") {
+            if (pagination.pageNum < countOfData.countOfPages) {
+                setPagination({
+                    pageNum: pagination.pageNum + 1
+                })
+                setCount(count += 1)
+            }
+        } else if (event.target.id === "skipFirst") {
+            setPagination({
+                pageNum: 1
+            })
+            setCount(0)
+        }
+        else if (event.target.id === "skipLast") {
+            setPagination({
+                pageNum: countOfData.countOfPages
+            })
+            setCount(countOfData.countOfPages - 1)
+        }
+    }
+
+    const handleChangePageSize = (event) => {
+        setPageSize(event.target.value)
+    }
+
     // Search Input Filter
     function handleChangeSearch(event) {
         const { name, value } = event.target;
@@ -56,31 +77,34 @@ export const Schemes = () => {
 
     // Get Data
     const getSchemes = async () => {
-        if (!searchInput.searchInput) {
-            const res = await GET("/officer/scheme")
-            if (res.data.success) {
-                setSchemeData(res?.data?.result?.data);
-                dispatch(getSchemeData(res?.data?.result))
-            }
-            else if (res.status === 401) {
-                toast.error("Inavlid User token")
-                localStorage.removeItem("ACCESS_TOKEN")
-                setTimeout(() => {
-                    navigate("/")
-                }, 1500);
-            }
+        const res = await GET("/officer/scheme", {
+            searchKey: searchInput.schemeFilter,
+            searchValue: searchInput.searchInput,
+            page: pagination.pageNum,
+            size: pageSize,
+            sort: "name",
+            sortOrder: "ASC"
+        })
+        if (res.data.success) {
+            setSchemeData(res?.data?.result?.data);
+            setCountofData({
+                countOfPages: Math.ceil(res?.data?.result?.count / pageSize),
+                countOfData: res?.data?.result?.count,
+            })
+            dispatch(getSchemeData(res?.data?.result))
         }
-        else {
-            const res = await GET(`/officer/scheme?searchKey=${searchInput.schemeFilter}&searchValue=${searchInput.searchInput}&page=${pagination.pageNum}&size=${pagination.pageSize}&sort=name&sortOrder=ASC`)
-            if (res.data.success) {
-                setSchemeData(res.data.result.data)
-            }
+        else if (res.status === 401) {
+            toast.error("Inavlid User token")
+            localStorage.removeItem("ACCESS_TOKEN")
+            setTimeout(() => {
+                navigate("/")
+            }, 1500);
         }
     }
     useEffect(() => {
         getSchemes()
     }, [Schemedata]);
-    
+
     const tableHead = [
         "Date of Commencement",
         "Scheme Name",
@@ -88,7 +112,7 @@ export const Schemes = () => {
         "Additional Requirement",
         "Action"
     ]
-    
+
     return (
         <Grid className='Schemes-main'>
             <Stack className='Schemes-inner' spacing={2}>
@@ -116,19 +140,19 @@ export const Schemes = () => {
                 <BasicTable data={Schemedata ?? []} tableHead={tableHead} tableName="scheme" />
                 <Grid className="table-footer">
                     <p>Rows per page</p>
-                    <select name="row-select" onChange={handleChangePagination}>
+                    <select name="row-select" onChange={handleChangePageSize}>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                     </select>
                     <p>
-                        1-{storedData.count} of {storedData.count}
+                        {pagination.pageNum + ((count * pageSize) - count)} - {(countOfData.countOfData < pageSize * pagination.pageNum) ? countOfData.countOfData : (pageSize * pagination.pageNum)} of {countOfData.countOfData}
                     </p>
                     <Grid className='pagination'>
-                        <p><SkipPreviousIcon name="skipToFirst" /></p>
-                        <p><NavigateBeforeIcon name="prevPage" onClick={(event) => handleChangePagination} /></p>
-                        <p><NavigateNextIcon name="skipToLast" /></p>
-                        <p><SkipNextIcon /></p>
+                        <button><SkipPreviousIcon id="skipFirst" onClick={handlePaginationClick} /></button>
+                        <button><NavigateBeforeIcon id="prevPage" onClick={handlePaginationClick} /></button>
+                        <button><NavigateNextIcon id="nextPage" onClick={handlePaginationClick} name="skipToLast" /></button>
+                        <button><SkipNextIcon id="skipLast" onClick={handlePaginationClick} /></button>
                     </Grid>
                 </Grid>
             </Stack>

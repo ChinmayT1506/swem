@@ -4,9 +4,11 @@
     height: 90vh;
     width: 80vw;
     background-color: rgb(241, 241, 241);
+
     .Events-inner {
         height: 100%;
         width: 100%;
+
         .Events-inner-1 {
             display: flex;
             justify-content: space-between;
@@ -52,13 +54,15 @@
                     font-size: 1.2rem;
                     border: 1px solid rgb(148, 139, 139);
                 }
-                .action{
+
+                .action {
                     border-radius: 3px;
                     border: 1px solid rgb(148, 139, 139);
                     background-color: #fff;
                 }
             }
         }
+
         .table-footer {
             background-color: #fff;
             margin-bottom: 2rem;
@@ -66,6 +70,7 @@
             width: 100%;
             display: flex;
             align-items: center;
+
             select {
                 font-size: 0.9rem;
                 outline: none;
@@ -73,11 +78,15 @@
                 background-color: transparent;
                 margin: 0rem 1rem;
             }
-            .pagination{
+
+            .pagination {
                 display: flex;
                 margin-right: 2rem;
                 padding-left: 1rem;
-                p{
+
+                button {
+                    border: none;
+                    background-color: transparent;
                     cursor: pointer;
                 }
             }
@@ -89,6 +98,7 @@
     .Events-main {
         width: 100%;
         padding: 3rem 1.1rem;
+
         .Events-inner {
             .Events-inner-1 {
                 button {
@@ -96,19 +106,33 @@
                     font-size: 0.8rem;
                 }
             }
+
             .Events-inner-2 {
                 height: 10%;
                 width: 100%;
+
                 .search {
                     width: 100%;
                     font-size: 0.7rem;
+
                     .search-input {
                         margin-right: 1rem;
                         font-size: 1rem;
                     }
+
                     .action {
                         font-size: 1rem;
                     }
+                }
+            }
+            .table-footer {
+                font-size: 0.75rem;
+                select {
+                    font-size: 0.8rem;
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                    margin: 0rem 1rem;
                 }
             }
         }

@@ -33,9 +33,14 @@ import AddQueryForm from '../app/modules/admin/queryManagement/addQuery'
 import ReplyQueryForm from '../app/modules/admin/queryManagement/replyQuery'
 import { LocateOnMap } from '../app/modules/admin/Reports/LocateOnMap'
 import { GeospatialCalculator } from '../app/modules/admin/Reports/GeospatialCalculator'
+import { useSelector } from 'react-redux'
 
 
 export const Mainroute = () => {
+
+    const USER = useSelector(state => state?.getLogindata?.loginData.user_type)
+    const isAdmin = (USER === "HOD")
+
     return (
         <>
             <BrowserRouter>
@@ -44,39 +49,60 @@ export const Mainroute = () => {
                         <Route index element={<Login />} />
                         <Route path="/*" element={<h2>Error 404</h2>} />
                     </Route>
-                    <Route path="/" element={<PrivateRouter />}>
-                        <Route path="/*" element={<h2>Error 404</h2>} />
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/schemes" element={<Schemes />} />
-                        <Route path="/schemes/addScheme" element={<AddSchemeForm />} />
-                        <Route path="/schemes/editScheme" element={<EditSchemeForm />} />
-                        <Route path="/events" element={<Events />} />
-                        <Route path="/events/addEvent" element={<AddEventForm />} />
-                        <Route path="/events/editEvent" element={<EditEventForm />} />
-                        <Route path="/event-occurence" element={<EventOccurance />} />
-                        <Route path="/show-event-occurence" element={<ShowEventOccurence />} />
-                        <Route path="/users/anganwadi" element={<Anganwadi />} />
-                        <Route path="/users/anganwadi/addAnganwadi" element={<AddAnganwadiForm />} />
-                        <Route path="/users/anganwadi/editAnganwadi" element={<EditAnganwadiForm />} />
-                        <Route path="/users/hod" element={<HOD />} />
-                        <Route path="/users/hod/addHod" element={<AddHODForm />} />
-                        <Route path="/users/hod/editHod" element={<EditHODForm />} />
-                        <Route path="/users/cdpo" element={<CDPO />} />
-                        <Route path="/users/cdpo/addCdpo" element={<AddCDPOForm />} />
-                        <Route path="/users/cdpo/editCdpo" element={<EditCDPOForm />} />
-                        <Route path="/users/dpo" element={<DPO />} />
-                        <Route path="/users/dpo/addDpo" element={<AddDPOForm />} />
-                        <Route path="/users/dpo/editDpo" element={<EditDPOForm />} />
-                        <Route path="/users/geoTagAnganwadi" element={<GeoTagAnganwadi />} />
-                        <Route path="/users/geoTagAnganwadi/editGeoTagAnganwadi" element={<EditGeoTagForm />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/changePassword" element={<ChangePasswordScreen />} />
-                        <Route path="/query" element={<QueryManagement />} />
-                        <Route path="/query/addQuery" element={<AddQueryForm />} />
-                        <Route path="/query/replyQuery" element={<ReplyQueryForm />} />
-                        <Route path="/locate-on-map" element={<LocateOnMap />} />
-                        <Route path="/geospatial-calculator" element={<GeospatialCalculator />} />
-                    </Route>
+                    {isAdmin ?
+                        <Route path="/" element={<PrivateRouter />}>
+                            <Route path="/*" element={<h2>Error 404</h2>} />
+                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/schemes" element={<Schemes />} />
+                            <Route path="/schemes/addScheme" element={<AddSchemeForm />} />
+                            <Route path="/schemes/editScheme" element={<EditSchemeForm />} />
+                            <Route path="/events" element={<Events />} />
+                            <Route path="/events/addEvent" element={<AddEventForm />} />
+                            <Route path="/events/editEvent" element={<EditEventForm />} />
+                            <Route path="/event-occurence" element={<EventOccurance />} />
+                            <Route path="/show-event-occurence" element={<ShowEventOccurence />} />
+                            <Route path="/users/anganwadi" element={<Anganwadi />} />
+                            <Route path="/users/anganwadi/addAnganwadi" element={<AddAnganwadiForm />} />
+                            <Route path="/users/anganwadi/editAnganwadi" element={<EditAnganwadiForm />} />
+                            <Route path="/users/hod" element={<HOD />} />
+                            <Route path="/users/hod/addHod" element={<AddHODForm />} />
+                            <Route path="/users/hod/editHod" element={<EditHODForm />} />
+                            <Route path="/users/cdpo" element={<CDPO />} />
+                            <Route path="/users/cdpo/addCdpo" element={<AddCDPOForm />} />
+                            <Route path="/users/cdpo/editCdpo" element={<EditCDPOForm />} />
+                            <Route path="/users/dpo" element={<DPO />} />
+                            <Route path="/users/dpo/addDpo" element={<AddDPOForm />} />
+                            <Route path="/users/dpo/editDpo" element={<EditDPOForm />} />
+                            <Route path="/users/geoTagAnganwadi" element={<GeoTagAnganwadi />} />
+                            <Route path="/users/geoTagAnganwadi/editGeoTagAnganwadi" element={<EditGeoTagForm />} />
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/changePassword" element={<ChangePasswordScreen />} />
+                            <Route path="/query" element={<QueryManagement />} />
+                            <Route path="/query/addQuery" element={<AddQueryForm />} />
+                            <Route path="/query/replyQuery" element={<ReplyQueryForm />} />
+                            <Route path="/locate-on-map" element={<LocateOnMap />} />
+                            <Route path="/geospatial-calculator" element={<GeospatialCalculator />} />
+                        </Route>
+                        :
+                        <Route path="/" element={<PrivateRouter />}>
+                            <Route path="/*" element={<h2>Error 404</h2>} />
+                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/users/anganwadi" element={<Anganwadi />} />
+                            <Route path="/users/anganwadi/addAnganwadi" element={<AddAnganwadiForm />} />
+                            <Route path="/users/anganwadi/editAnganwadi" element={<EditAnganwadiForm />} />
+                            <Route path="/event-occurence" element={<EventOccurance />} />
+                            <Route path="/show-event-occurence" element={<ShowEventOccurence />} />
+                            <Route path="/users/geoTagAnganwadi" element={<GeoTagAnganwadi />} />
+                            <Route path="/users/geoTagAnganwadi/editGeoTagAnganwadi" element={<EditGeoTagForm />} />
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/changePassword" element={<ChangePasswordScreen />} />
+                            <Route path="/query" element={<QueryManagement />} />
+                            <Route path="/query/addQuery" element={<AddQueryForm />} />
+                            <Route path="/query/replyQuery" element={<ReplyQueryForm />} />
+                            <Route path="/locate-on-map" element={<LocateOnMap />} />
+                            <Route path="/geospatial-calculator" element={<GeospatialCalculator />} />
+                        </Route>
+                    }
                 </Routes>
             </BrowserRouter>
         </>

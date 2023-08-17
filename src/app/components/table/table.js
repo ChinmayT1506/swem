@@ -92,88 +92,92 @@ function BasicTable({ data, tableHead, tableName, handleOpen }) {
                                                     <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName = "user")} />
                                                 </td>
                                             </tr>
-                                        )) : (tableName === "HOD" ?
-                                            data?.map((item, index) => (
-                                                <tr key={index}>
-                                                    <td>{item.first_name}</td>
-                                                    <td>8393939939</td>
-                                                    <td style={{ cursor: 'pointer' }}>
-                                                        <EditIcon onClick={() => navigate("editHod")} />
-                                                        <DeleteIcon />
-                                                    </td>
-                                                </tr>
-                                            )) : (tableName === "CDPO" ?
-                                                data?.map((item, index) => (
-                                                    <tr key={index}>
-                                                        <td>{item.name}</td>
-                                                        <td>{item.mobile}</td>
-                                                        <td>{item.district}</td>
-                                                        <td>{item.project}</td>
-                                                        <td style={{ cursor: 'pointer' }}>
-                                                            <EditIcon onClick={() => navigate("editCdpo", { state: { item } })} />
-                                                            <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName = "user")} />
-                                                        </td>
-                                                    </tr>
-                                                )) : (tableName === "DPO") ?
-                                                    data?.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <td>{item.first_name}</td>
-                                                            <td>8393939939</td>
-                                                            <td>Baram</td>
+                                        )) : (
+                                            tableName === "hod" ?
+                                                (data?.length >= 1 ?
+                                                    data?.map((item) => (
+                                                        <tr>
+                                                            <td>{item.name}</td>
+                                                            <td>{item.mobile}</td>
                                                             <td style={{ cursor: 'pointer' }}>
-                                                                <EditIcon onClick={() => navigate("editDpo")} />
-                                                                <DeleteIcon />
+                                                                <EditIcon onClick={() => navigate("editHod")} />
+                                                                <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName)} />
                                                             </td>
                                                         </tr>
-                                                    )) : (tableName === "GeoTagAnganwadi") ?
+                                                    )) : "")
+                                                : (tableName === "CDPO" ?
+                                                    data?.map((item, index) => (
+                                                        <tr key={index}>
+                                                            <td>{item.name}</td>
+                                                            <td>{item.mobile}</td>
+                                                            <td>{item.district}</td>
+                                                            <td>{item.project}</td>
+                                                            <td style={{ cursor: 'pointer' }}>
+                                                                <EditIcon onClick={() => navigate("editCdpo", { state: { item } })} />
+                                                                <DeleteIcon onClick={() => DeleteItemFunc(item._id, tableName = "user")} />
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                    : (tableName === "DPO") ?
                                                         data?.map((item, index) => (
                                                             <tr key={index}>
                                                                 <td>{item.first_name}</td>
                                                                 <td>8393939939</td>
                                                                 <td>Baram</td>
-                                                                <td>Baram</td>
-                                                                <td>Baram</td>
-                                                                <td>HDGHG</td>
-                                                                <td>Baram</td>
-                                                                <td>94.4533</td>
-                                                                <td>79.8833</td>
-                                                                <td>HOD</td>
-                                                                <td>Pending</td>
                                                                 <td style={{ cursor: 'pointer' }}>
-                                                                    <button onClick={handleOpen}>Show on Map</button>
-                                                                    <EditIcon onClick={() => navigate("editGeoTagAnganwadi")} />
+                                                                    <EditIcon onClick={() => navigate("editDpo")} />
+                                                                    <DeleteIcon />
                                                                 </td>
                                                             </tr>
-                                                        )) : (tableName === "Event-Occurence") ?
+                                                        )) : (tableName === "GeoTagAnganwadi") ?
                                                             data?.map((item, index) => (
                                                                 <tr key={index}>
                                                                     <td>{item.first_name}</td>
                                                                     <td>8393939939</td>
+                                                                    <td>Baram</td>
+                                                                    <td>Baram</td>
+                                                                    <td>Baram</td>
+                                                                    <td>HDGHG</td>
                                                                     <td>Baram</td>
                                                                     <td>94.4533</td>
                                                                     <td>79.8833</td>
                                                                     <td>HOD</td>
                                                                     <td>Pending</td>
                                                                     <td style={{ cursor: 'pointer' }}>
-                                                                        <button onClick={() => navigate("/show-event-occurence", { state: { lat: 28.6081, long: 77.3723 } })}>Show</button>
+                                                                        <button onClick={handleOpen}>Show on Map</button>
+                                                                        <EditIcon onClick={() => navigate("editGeoTagAnganwadi")} />
                                                                     </td>
                                                                 </tr>
-                                                            )) : (tableName = "QueryManagement") ?
-                                                                <tr>
-                                                                    <td>8Shyam</td>
-                                                                    <td>Not able to edit the Record of any Anganwadi Centre</td>
-                                                                    <td>When i open the record of Anganwadi Centre in edit mode by clicking on edit button, and after making changes in the reocrd like changing Phone Number or any other attribute or even without any change in record when i click on submit button the record did not get submit and shows the error "Negative value is not allowed" just below the field of Phone No.</td>
-                                                                    <td>Kathua</td>
-                                                                    <td>Kathua</td>
-                                                                    <td>08-08-2023</td>
-                                                                    <td>Completed</td>
-                                                                    {
-                                                                        isAdmin ?
-                                                                            <td onClick={() => navigate("/query/replyQuery")}><ReplyIcon sx={{ cursor: 'pointer' }} /></td>
-                                                                            : <td onClick={() => navigate("/query/replyQuery")}><VisibilityIcon sx={{ cursor: 'pointer' }} /></td>
-                                                                    }
-                                                                </tr> : ""
-                                            )
+                                                            )) : (tableName === "Event-Occurence") ?
+                                                                data?.map((item, index) => (
+                                                                    <tr key={index}>
+                                                                        <td>{item.first_name}</td>
+                                                                        <td>8393939939</td>
+                                                                        <td>Baram</td>
+                                                                        <td>94.4533</td>
+                                                                        <td>79.8833</td>
+                                                                        <td>HOD</td>
+                                                                        <td>Pending</td>
+                                                                        <td style={{ cursor: 'pointer' }}>
+                                                                            <button onClick={() => navigate("/show-event-occurence", { state: { lat: 28.6081, long: 77.3723 } })}>Show</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                )) : (tableName = "QueryManagement") ?
+                                                                    <tr>
+                                                                        <td>8Shyam</td>
+                                                                        <td>Not able to edit the Record of any Anganwadi Centre</td>
+                                                                        <td>When i open the record of Anganwadi Centre in edit mode by clicking on edit button, and after making changes in the reocrd like changing Phone Number or any other attribute or even without any change in record when i click on submit button the record did not get submit and shows the error "Negative value is not allowed" just below the field of Phone No.</td>
+                                                                        <td>Kathua</td>
+                                                                        <td>Kathua</td>
+                                                                        <td>08-08-2023</td>
+                                                                        <td>Completed</td>
+                                                                        {
+                                                                            isAdmin ?
+                                                                                <td onClick={() => navigate("/query/replyQuery")}><ReplyIcon sx={{ cursor: 'pointer' }} /></td>
+                                                                                : <td onClick={() => navigate("/query/replyQuery")}><VisibilityIcon sx={{ cursor: 'pointer' }} /></td>
+                                                                        }
+                                                                    </tr> : ""
+                                                )
                                         ))
                                 )
                             )

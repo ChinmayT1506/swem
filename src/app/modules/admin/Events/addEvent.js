@@ -73,6 +73,7 @@ export default function AddEventForm() {
                                 label=""
                                 onChange={handleChange}
                             >
+                                <option value="none" selected disabled hidden>Select a Scheme</option>
                                 {scheme_List.map(item => (
                                     <option value={item._id}>{item.scheme_name}</option>
                                 ))}

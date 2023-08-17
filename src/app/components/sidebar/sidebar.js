@@ -86,6 +86,7 @@ export default function Sidebar() {
                         <GridViewIcon />
                         <h4>Dashboard</h4>
                     </Grid>
+                    {isAdmin ?
                     <NavLink to="/schemes" >
                         <List className='List' >
                             <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
@@ -108,7 +109,8 @@ export default function Sidebar() {
                                 </ListItemButton>
                             </ListItem>
                         </List>
-                    </NavLink>
+                    </NavLink> : ""}
+                    {isAdmin ?
                     <NavLink to="/events" >
                         <List className='List'>
                             <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
@@ -132,7 +134,7 @@ export default function Sidebar() {
                                 </ListItemButton>
                             </ListItem>
                         </List>
-                    </NavLink>
+                    </NavLink> : ""}
                     <List className='List'>
                         <ListItem className="list-item" disablePadding sx={{ display: 'block' }} onClick={Collapser}>
                             <ListItemButton

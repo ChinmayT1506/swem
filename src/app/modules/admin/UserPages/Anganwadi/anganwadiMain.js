@@ -4,11 +4,9 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CSVLink } from 'react-csv'
 import BasicTable from '../../../../components/table/table';
-import { useDispatch } from 'react-redux';
 import { GET } from '../../../../../services/api';
 import { toast } from 'react-toastify';
 import './anganwadiMain.scss'
@@ -18,7 +16,6 @@ export const Anganwadi = () => {
     let [count, setCount] = useState(0);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     let [anganwadiData, setanganwadiData] = useState([]);
     let [countOfData, setCountofData] = useState({});
@@ -33,35 +30,6 @@ export const Anganwadi = () => {
 
     const [pageSize, setPageSize] = useState(10)
 
-    const handlePaginationClick = (event) => {
-        if (event.target.id === "prevPage") {
-            if (pagination.pageNum > 1) {
-                setPagination({
-                    pageNum: pagination.pageNum - 1
-                })
-                setCount(count-=1)
-            }
-        }
-        else if (event.target.id === "nextPage") {
-            if (pagination.pageNum < countOfData.countOfPages) {
-                setPagination({
-                    pageNum: pagination.pageNum + 1
-                })
-                setCount(count+=1)
-            }
-        } else if (event.target.id === "skipFirst") {
-            setPagination({
-                pageNum: 1
-            })
-            setCount(0)
-        }
-        else if (event.target.id === "skipLast") {
-            setPagination({
-                pageNum: countOfData.countOfPages
-            })
-            setCount(countOfData.countOfData)
-        }
-    }
     console.log(pagination.pageNum)
 
     // Get data
@@ -78,7 +46,7 @@ export const Anganwadi = () => {
         if (res.data.success) {
             setanganwadiData(res?.data?.result?.data)
             setCountofData({
-                countOfPages: Math.ceil(res?.data?.result?.count / 10),
+                countOfPages: Math.ceil(res?.data?.result?.count / pageSize),
                 countOfData: res?.data?.result?.count,
             })
             console.log(res?.data?.result?.data)
@@ -112,7 +80,7 @@ export const Anganwadi = () => {
     }
 
     const handleChangePageSize = (event) => {
-            setPageSize(event.target.value)
+        setPageSize(event.target.value);
     }
 
     const tableHead = [
@@ -125,6 +93,36 @@ export const Anganwadi = () => {
         "Anganwadi Centre Address",
         "Action"
     ]
+
+    const handlePaginationClick = (event) => {
+        if (event.target.id === "prevPage") {
+            if (pagination.pageNum > 1) {
+                setPagination({
+                    pageNum: pagination.pageNum - 1
+                })
+                setCount(count -= 1)
+            }
+        }
+        else if (event.target.id === "nextPage") {
+            if (pagination.pageNum < countOfData.countOfPages) {
+                setPagination({
+                    pageNum: pagination.pageNum + 1
+                })
+                setCount(count += 1)
+            }
+        } else if (event.target.id === "skipFirst") {
+            setPagination({
+                pageNum: 1
+            })
+            setCount(0)
+        }
+        else if (event.target.id === "skipLast") {
+            setPagination({
+                pageNum: countOfData.countOfPages
+            })
+            setCount(countOfData.countOfPages - 1)
+        }
+    }
 
     return (
         <Grid className='Anganwadi-main'>
@@ -160,7 +158,7 @@ export const Anganwadi = () => {
                         </FormControl>
                     </Box>
                 </Grid>
-                <BasicTable data={anganwadiData} tableHead={tableHead} tableName="anganwadi" />
+                <BasicTable data={anganwadiData ?? []} tableHead={tableHead} tableName="anganwadi" />
                 <Grid className="table-footer">
                     <p>Rows per page</p>
                     <select name="row-select" onChange={handleChangePageSize}>
@@ -169,7 +167,7 @@ export const Anganwadi = () => {
                         <option value="30">30</option>
                     </select>
                     <p>
-                        {pagination.pageNum + ((count * pageSize) - count)}-{pageSize * pagination.pageNum} of {countOfData.countOfData}
+                        {pagination.pageNum + ((count * pageSize) - count)} - {(countOfData.countOfData < pageSize * pagination.pageNum) ? countOfData.countOfData : (pageSize * pagination.pageNum)} of {countOfData.countOfData}
                     </p>
                     <Grid className='pagination'>
                         <button><SkipPreviousIcon id="skipFirst" onClick={handlePaginationClick} /></button>

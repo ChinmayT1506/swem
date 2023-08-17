@@ -14,18 +14,20 @@ import { toast } from 'react-toastify';
 
 export const CDPO = () => {
 
+    const navigate = useNavigate();
+
+    let [cdpodata, setcdpoData] = useState([]);
     let [count, setCount] = useState(0);
+    let [countOfData, setCountofData] = useState({});
+    const [pageSize, setPageSize] = useState(10)
+
     const [searchInput, setSearchInput] = useState({
         eventFilter: "all"
     });
-    let [cdpodata, setcdpoData] = useState([]);
-    let [countOfData, setCountofData] = useState({});
     const [pagination, setPagination] = useState({
         pageNum: 1,
     })
-    const [pageSize, setPageSize] = useState(10)
 
-    const navigate = useNavigate();
 
     const handlePaginationClick = (event) => {
         if (event.target.id === "prevPage") {
@@ -53,7 +55,7 @@ export const CDPO = () => {
             setPagination({
                 pageNum: countOfData.countOfPages
             })
-            setCount(countOfData.countOfData)
+            setCount(countOfData.countOfPages - 1)
         }
     }
 
@@ -69,7 +71,12 @@ export const CDPO = () => {
     }
 
     const handleChangePageSize = (event) => {
+        console.log(pagination.pageNum)
         setPageSize(event.target.value)
+        setPagination({
+            pageNum: Math.ceil((pageSize / 10) * pagination.pageNum)
+        })
+        console.log(pagination.pageNum)
     }
 
     // Get data
@@ -86,7 +93,7 @@ export const CDPO = () => {
         if (res.data.success) {
             setcdpoData(res?.data?.result?.data)
             setCountofData({
-                countOfPages: Math.ceil(res?.data?.result?.count / 10),
+                countOfPages: Math.ceil(res?.data?.result?.count / pageSize),
                 countOfData: res?.data?.result?.count,
             })
             console.log(res?.data?.result?.data)
@@ -143,9 +150,6 @@ export const CDPO = () => {
                                 <MenuItem value="name">Name</MenuItem>
                                 <MenuItem value="district">District</MenuItem>
                                 <MenuItem value="project">Project</MenuItem>
-                                <MenuItem value="awc-name">AWC-name</MenuItem>
-                                <MenuItem value="awc-code">AWC-code</MenuItem>
-                                <MenuItem value="awc-address">AWC-address</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
@@ -159,13 +163,14 @@ export const CDPO = () => {
                         <option value="30">30</option>
                     </select>
                     <p>
-                        {pagination.pageNum + ((count * pageSize) - count)}-{pageSize * pagination.pageNum} of {countOfData.countOfData}
+                        {pagination.pageNum + ((count * pageSize) - count)} - {(countOfData.countOfData < pageSize * pagination.pageNum) ? countOfData.countOfData : (pageSize * pagination.pageNum)} of {countOfData.countOfData}
                     </p>
                     <Grid className='pagination'>
                         <button><SkipPreviousIcon id="skipFirst" onClick={handlePaginationClick} /></button>
                         <button><NavigateBeforeIcon id="prevPage" onClick={handlePaginationClick} /></button>
                         <button><NavigateNextIcon id="nextPage" onClick={handlePaginationClick} name="skipToLast" /></button>
-                        <button><SkipNextIcon id="skipLast" onClick={handlePaginationClick} /></button>                    </Grid>
+                        <button><SkipNextIcon id="skipLast" onClick={handlePaginationClick} /></button>
+                    </Grid>
                 </Grid>
             </Stack>
         </Grid>

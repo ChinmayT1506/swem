@@ -5,17 +5,10 @@ import { Icon } from 'leaflet';
 import image from "../../../assets/images/marker.png"
 import { Grid } from '@mui/material';
 
-export const MapLocator = () => {
+export const MapLocator = ({ data, selectedDistrict }) => {
 
     const position = [34.0837, 74.7973]
 
-    const positionArr = [
-        { lat: 34.0837, long: 74.7973 },
-        { lat: 34.0937, long: 74.7984 },
-        { lat: 34.1247, long: 74.7973 },
-        { lat: 34.1238, long: 74.7973 },
-        { lat: 34.0939, long: 74.7975 },
-    ]
     return (
         <>
             <Grid>
@@ -32,15 +25,17 @@ export const MapLocator = () => {
                         url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
                     />
                     {
-                        positionArr.map(item => {
-                            return <Marker position={[item.lat, item.long]}
-                                icon={new Icon({ iconUrl: image, iconSize: [100, 81] })}
-                            >
-                                <Popup>
-                                    {item.lat} <br /> {item.long}
-                                </Popup>
-                            </Marker>
-                        })
+                        data.map((item, index) => (
+                            (item.district === selectedDistrict) ?
+                                <Marker position={[item.latitude, item.longitude]}
+                                    icon={new Icon({ iconUrl: image, iconSize: [100, 81] })}
+                                >
+                                    <Popup>
+                                        {item.latitude} <br /> {item.longitude}
+                                    </Popup>
+                                </Marker>
+                                : null
+                        ))
                     }
                     <Marker position={position}
                         icon={new Icon({ iconUrl: image, iconSize: [100, 81] })}

@@ -40,6 +40,7 @@ export default function Login() {
         };
         const res = await POST("/user/session", payload);
         if (res.data.success) {
+            document.getElementById("loginBtn").disabled = "true"
             localStorage.setItem("ACCESS_TOKEN", res.data.result.token)
             // localStorage.setItem("USER_TYPE", res.data.result.user_type)
             toast.success("Login Successful")
@@ -47,8 +48,7 @@ export default function Login() {
                 navigate("/dashboard")
             }, 1500);
             dispatch(getLoginData(res.data.result))            
-            console.log(res.data.result)
-            // document.getElementById("loginBtn").disabled = "true"
+            // console.log(res.data.result)
         }
         else {
             navigate("/")
@@ -115,7 +115,7 @@ export default function Login() {
                                     {(eyeIcon) ? <RemoveRedEyeIcon onClick={toggleButton} className='eyeIcon' fontSize='small' /> : <VisibilityOffIcon onClick={toggleButton} className='eyeIcon' fontSize='small' />}
                                 </Box>
                             </Grid>
-                            <button id="loginBtn">Login</button>
+                            <button type="submit" id="loginBtn">Login</button>
                         </Stack>
                     </form>
                 </Stack>
