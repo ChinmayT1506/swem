@@ -16,7 +16,7 @@
 }
 
 button,
-a {
+a, link {
   cursor: pointer;
 }
 

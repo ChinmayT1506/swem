@@ -28,6 +28,13 @@
         .table-2{
             margin: 3.5rem 0rem;
             min-height: 42%;
+            button {
+                background-color: green;
+                padding: 0.8rem 1.3rem;
+                color: #FBFBFB;
+                border: none;
+                border-radius: 0.2rem;
+            }
         }
     }
 }

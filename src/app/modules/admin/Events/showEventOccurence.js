@@ -7,6 +7,8 @@ import Modal from '@mui/material/Modal';
 import { BasicMarkedMap } from '../../../components/Maps/MarkedMap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { toast } from 'react-toastify';
+import { GET } from '../../../../services/api';
 
 const style = {
   position: 'absolute',
@@ -23,28 +25,52 @@ const style = {
 
 export const ShowEventOccurence = () => {
 
+  const [conductionData, setConductionData] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const eventData = location?.state?.item
+
+  // const [img, setImg] = useState();
+
+  const [mediaData, setmediaData] = useState();
 
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+
+  const handleOpen = (item) => {
+    setOpen(true);
+    setmediaData(item)
+  };
   const handleClose = () => setOpen(false);
 
-  let [data, setData] = useState([]);
-  const location = useLocation()
-  // console.log(location.state.lat)
+  console.log(location?.state?.item?._id)
+
   // Get data
-  useEffect(() => {
-    (async function () {
-      try {
-        const response = await axios.get(
-          "https://reqres.in/api/users?page=2"
-        );
-        setData(response.data.data);
-        // console.log(response.data.data);
-      } catch (err) {
-        console.log(err);
+  const getConductionList = async () => {
+    const res = await GET("officer/conduction/media",
+      {
+        conductionId: eventData._id
       }
-    })();
+    )
+    if (res?.data?.success) {
+      setConductionData(res?.data?.result?.media)
+      console.log(res?.data?.result?.media)
+    }
+    else if (res?.status === 401) {
+      toast.error("Inavalid User token")
+      localStorage.removeItem("ACCESS_TOKEN")
+      setTimeout(() => {
+        navigate("/")
+      }, 1500);
+    }
+    else if (res?.status === 400) {
+      toast.error("Failed to Fetch Data")
+    }
+    else {
+      toast.error(res?.data.message)
+    }
+  }
+  useEffect(() => {
+    getConductionList()
   }, []);
 
   return (
@@ -63,7 +89,6 @@ export const ShowEventOccurence = () => {
                 <tr>
                   <th>Date</th>
                   <th>Event</th>
-                  <th>Name</th>
                   <th>Associate Scheme</th>
                   <th>District</th>
                   <th>Block</th>
@@ -74,21 +99,20 @@ export const ShowEventOccurence = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td>08/08/2023</td>
-                  <td>COMMUNITY BASED EVENTS</td>
-                  <td>Poshan Abhiyan</td>
-                  <td>Srinagar</td>
-                  <td>Srinagar</td>
-                  <td>Srinagar</td>
-                  <td>1000000</td>
-                  <td>99</td>
-                  <td>1000</td>
+                  <td>{eventData.createdAt.slice(0, 10)}</td>
+                  <td>{eventData.event_name}</td>
+                  <td>{eventData.scheme}</td>
+                  <td>{eventData.district}</td>
+                  <td>{eventData.block}</td>
+                  <td>{eventData.awc_name}</td>
+                  <td>{eventData.participants}</td>
+                  <td>{eventData.expenditure}</td>
                 </tr>
               </tbody>
             </table>
           </Grid >
           <Grid className='carousel-container'>
-            <BasicCarousel />
+            <BasicCarousel data={conductionData}/>
           </Grid>
           <Grid className="table-container table-2">
             <table>
@@ -103,36 +127,18 @@ export const ShowEventOccurence = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>url.jpeg</td>
-                  <td>88.983733</td>
-                  <td>45.727828</td>
-                  <td>08/08/2023</td>
-                  <td>false</td>
-                  <td><button onClick={handleOpen}>Show on Map</button></td>
-                </tr>
-                <tr>
-                  <td>url.jpeg</td>
-                  <td>88.983733</td>
-                  <td>45.727828</td>
-                  <td>08/08/2023</td>
-                  <td>false</td>
-                  <td><button>Show on Map</button></td>
-                </tr><tr>
-                  <td>url.jpeg</td>
-                  <td>88.983733</td>
-                  <td>45.727828</td>
-                  <td>08/08/2023</td>
-                  <td>false</td>
-                  <td><button>Show on Map</button></td>
-                </tr><tr>
-                  <td>url.jpeg</td>
-                  <td>88.983733</td>
-                  <td>45.727828</td>
-                  <td>08/08/2023</td>
-                  <td>false</td>
-                  <td><button>Show on Map</button></td>
-                </tr>
+                {
+                  conductionData?.map(item => (
+                    <tr key={item._id}>
+                      <td>{item.filename}</td>
+                      <td>{item.longitude}</td>
+                      <td>{item.latitude}</td>
+                      <td>{item.timestamp}</td>
+                      <td>{JSON.stringify(item.mocked)}</td>
+                      <td><button onClick={() => handleOpen(item)}>Show on Map</button></td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </Grid >
@@ -145,7 +151,7 @@ export const ShowEventOccurence = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <BasicMarkedMap lat={location.state.lat} long={location.state.long} />
+          <BasicMarkedMap lat={mediaData?.latitude} long={mediaData?.longitude} />
         </Box>
       </Modal>
     </>

@@ -1,9 +1,7 @@
 import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import './hodMain.scss'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { CSVLink } from 'react-csv'
 import BasicTable from '../../../../components/table/table';
 import { toast } from 'react-toastify';
 import { GET } from '../../../../../services/api';
@@ -57,7 +55,7 @@ export const HOD = () => {
             setPagination({
                 pageNum: countOfData.countOfPages
             })
-            setCount(countOfData.countOfPages - 1)
+            setCount(countOfData.countOfData)
         }
     }
 
@@ -90,7 +88,7 @@ export const HOD = () => {
         if (res?.data?.success) {
             setHodData(res?.data?.result?.data)
             setCountofData({
-                countOfPages: Math.ceil(res?.data?.result?.count / pageSize),
+                countOfPages: Math.ceil(res?.data?.result?.count / 10),
                 countOfData: res?.data?.result?.count,
             })
             console.log(res?.data?.result?.data)

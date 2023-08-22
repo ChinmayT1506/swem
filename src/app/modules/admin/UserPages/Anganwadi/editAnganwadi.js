@@ -3,10 +3,8 @@ import './addAnganwadi.scss'
 import { Box, Grid, Stack } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useSelector } from 'react-redux';
-import { PUT } from '../../../../../services/api';
+import { GET, PUT } from '../../../../../services/api';
 import { toast } from 'react-toastify';
 
 export default function EditAnganwadiForm() {
@@ -15,36 +13,10 @@ export default function EditAnganwadiForm() {
 
     const location = useLocation()
     const [currDistrictId, setCurrDistrictId] = useState("");
-    const [eyeIcon, setEyeIcon] = useState(false);
-    const [eyeIcon2, setEyeIcon2] = useState(false);
     const district_List = useSelector(state => state.getDistrictsData.DistrictDataArr)
     const [entry, setEntry] = useState(location.state.item);
+    const [blockDataArr, setBlockDataArr] = useState();
     console.log(entry)
-    
-    function toggleButton() {
-        let eyeToggle = document.getElementById('passwordInput');
-        if (eyeToggle.type === 'password') {
-            eyeToggle.type = 'text';
-            setEyeIcon(true)
-        }
-        else {
-            eyeToggle.type = 'password';
-            setEyeIcon(false)
-        }
-    }
-
-    function toggleButton2() {
-        let eyeToggle = document.getElementById('ConfirmPasswordInput');
-        if (eyeToggle.type === 'password') {
-            eyeToggle.type = 'text';
-            setEyeIcon2(true)
-        }
-        else {
-            eyeToggle.type = 'password';
-            setEyeIcon2(false)
-        }
-    }
-
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -54,6 +26,32 @@ export default function EditAnganwadiForm() {
                 [name]: value
             };
         });
+        // get block data
+        if (event.target.name === "district") {
+            const Master_Project = async () => {
+                let res = await GET("/officer/master/block",
+                    {
+                        district: event.target.value
+                    }
+                )
+                if (res?.data?.success) {
+                    console.log(res.data.result.data)
+                    setBlockDataArr(res?.data?.result?.data)
+                    // dispatch(getBlockData(res?.data?.result?.data))
+                }
+                else if (res.status === 401) {
+                    toast.error("Inavlid User token")
+                    localStorage.removeItem("ACCESS_TOKEN")
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 1500);
+                }
+                else {
+                    toast.error(res.data.message)
+                }
+            }
+            Master_Project()
+        }
     }
 
     // edit data
@@ -65,7 +63,6 @@ export default function EditAnganwadiForm() {
             mobile: entry.mobile,
             district: entry.district,
             block: entry.block,
-            password: entry.confirmPassword === entry.newPassword ? entry.newPassword : "",
             sector: entry.sector,
             awc_name: entry.awc_name,
             awc_code: entry.awc_code,
@@ -118,8 +115,21 @@ export default function EditAnganwadiForm() {
                                     <option value={item.district} onClick={() => setCurrDistrictId(item._id)}>{item.district}</option>
                                 ))}
                             </select>
-                            <label for='project'>Project</label>
-                            <input onChange={handleChange} className='' id='project' type='text' name='project'></input>
+                            <select
+                                labelId="filterlabel"
+                                id="select"
+                                name='project'
+                                label="All"
+                                onChange={handleChange}
+                            // autoComplete='off'
+                            >
+                                <option value={entry._id}>{entry.block}</option>
+                                {blockDataArr?.map(item => (
+                                    item.block !== entry.block ?
+                                        <option value={item._id}>{item.block}</option>
+                                        : ""
+                                ))}
+                            </select>
 
                             <label for='sector'>Sector</label>
                             <input value={entry.sector} onChange={handleChange} className='' id='sector' type='number' name='sector'></input>
@@ -132,22 +142,6 @@ export default function EditAnganwadiForm() {
 
                             <label for='anganwadiAddress'>Anganwadi Centre Address</label>
                             <textarea value={entry.awc_address} onChange={handleChange} className='' id='anganwadiCentreAddress' rows="3" name='awc_address'></textarea>
-
-                            <label for='newPassword'>New Password</label>
-                            <Grid className='passwordInput'>
-                                <input onChange={handleChange} className='password-input-Class' id='passwordInput' type='password' name='newPassword' placeholder='Enter New Password' value={entry.newPassword}></input>
-                                <Box className="eyeIconDiv">
-                                    {(eyeIcon) ? <RemoveRedEyeIcon onClick={toggleButton} className='eyeIcon' fontSize='small' /> : <VisibilityOffIcon onClick={toggleButton} className='eyeIcon' fontSize='small' />}
-                                </Box>
-                            </Grid>
-
-                            <label for='confirmPassword'>Confirm Password</label>
-                            <Grid className='passwordInput'>
-                                <input onChange={handleChange} className='password-input-Class' id='ConfirmPasswordInput' type='password' name='confirmPassword' placeholder='Enter Password'></input>
-                                <Box className="eyeIconDiv">
-                                    {(eyeIcon2) ? <RemoveRedEyeIcon onClick={toggleButton2} className='eyeIcon' fontSize='small' /> : <VisibilityOffIcon onClick={toggleButton2} className='eyeIcon' fontSize='small' />}
-                                </Box>
-                            </Grid>
                             <Grid className='submitForm'>
                                 <button type="button" onClick={() => navigate(-1)}>Cancel</button>
                                 <button type='submit'>Submit</button>

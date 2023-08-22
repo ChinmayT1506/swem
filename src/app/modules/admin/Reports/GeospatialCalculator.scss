@@ -1,31 +1,97 @@
-.geospatial-calulator-container{
+.geospatial-calulator-container {
     display: flex;
     padding: 2rem 2rem;
     height: 90vh;
     width: 80vw;
     background-color: rgb(241, 241, 241);
-    .geospatial-calculator-inner{
+
+    .geospatial-calculator-inner {
         height: 100%;
-        background-color: aqua;
         width: 100%;
         display: flex;
+
         // justify-content: ;
         // align-items: flex-start;
-        .geospatial-calculator-map{
-            width: 50%;
-            background-color: bisque;
+        .geospatial-calculator-map {
+            width: 60%;
         }
-        .geospatial-calculator-form{
+
+        .geospatial-calculator-form {
             height: 100%;
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
-            background-color: rgb(80, 29, 161);
             width: 50%;
             padding: 0rem 1rem;
-            h5{
-                
+            flex-direction: column;
+
+            h4 {
+                font-weight: 500;
+            }
+
+            .buttonBox {
+                button {
+                    margin-right: 0.5rem;
+                    border-radius: 5px;
+                    color: white;
+
+                    &:first-child {
+                        background-color: green;
+                    }
+
+                    &:last-child {
+                        background-color: red;
+                    }
+                }
+            }
+
+            .Form-main {
+                display: flex;
+                width: 100%;
+
+                .Form-inner {
+                    align-items: flex-start;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+
+                    input {
+                        height: 2.5rem;
+                        width: 100%;
+                        font-size: 1rem;
+                        padding-left: 0.6rem;
+                    }
+                }
+            }
+
+            .table {
+                max-width: 50vw;
+                max-height: 28vh;
+                overflow: auto;
+
+                table {
+                    max-width: 33vw;
+                    background-color: #fff;
+                    border: 1px solid black;
+                    border-collapse: collapse;
+                    border: 1px solid rgb(236, 232, 232);
+                    tr {
+                        th,
+                        td {
+                            min-width: 7rem;
+                            padding: 0.5rem 0rem;
+                            border-bottom: 1px solid black;
+                            border-collapse: collapse;
+                        }
+                    }
+                }
             }
         }
     }
+}
+
+.changeBgColor {
+    opacity: 0.7;
+    background-color: rgb(229, 225, 225) !important;
+    color: rgb(127, 128, 128) !important;
 }

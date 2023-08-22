@@ -7,18 +7,55 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { toast } from 'react-toastify';
-import { PUT } from '../../../../../services/api';
+import { GET, PUT } from '../../../../../services/api';
 import { useSelector } from 'react-redux';
 
 export default function EditCDPOForm() {
 
     const navigate = useNavigate();
     const location = useLocation()
-    const [currDistrictId, setCurrDistrictId] = useState("");
     const [eyeIcon, setEyeIcon] = useState(false);
     const [eyeIcon2, setEyeIcon2] = useState(false);
-    const district_List = useSelector(state => state.getDistrictsData.DistrictDataArr)
     const [entry, setEntry] = useState(location.state.item);
+    const [blockDataArr, setBlockDataArr] = useState();
+
+    const district_List = useSelector(state => state.getDistrictsData.DistrictDataArr)
+
+    function handleChange(event) {
+        const { name, value } = event.target;
+        setEntry(item => {
+            return {
+                ...item,
+                [name]: value
+            };
+        });
+        // get block data
+        if (event.target.name === "district") {
+            const Master_Project = async () => {
+                let res = await GET("/officer/master/block",
+                    {
+                        district: event.target.value
+                    }
+                )
+                if (res?.data?.success) {
+                    console.log(res.data.result.data)
+                    setBlockDataArr(res?.data?.result?.data)
+                    // dispatch(getBlockData(res?.data?.result?.data))
+                }
+                else if (res.status === 401) {
+                    toast.error("Inavlid User token")
+                    localStorage.removeItem("ACCESS_TOKEN")
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 1500);
+                }
+                else {
+                    toast.error(res.data.message)
+                }
+            }
+            Master_Project()
+        }
+    }
 
     function toggleButton() {
         let eyeToggle = document.getElementById('passwordInput');
@@ -32,15 +69,6 @@ export default function EditCDPOForm() {
         }
     }
 
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setEntry(item => {
-            return {
-                ...item,
-                [name]: value
-            };
-        });
-    }
 
     function toggleButton2() {
         let eyeToggle = document.getElementById('ConfirmPasswordInput');
@@ -55,7 +83,7 @@ export default function EditCDPOForm() {
     }
 
 
-    // post data
+    // edit data
     async function handleSubmit(event) {
         // console.log(entry._id)
         event.preventDefault();
@@ -64,8 +92,7 @@ export default function EditCDPOForm() {
             name: entry.name,
             mobile: entry.mobile,
             district: entry.district,
-            project: entry.project,
-            block: "abc",
+            block: entry.project,
             password: entry.newPassword === entry.confirmPassword ? entry.newPassword : "",
         })
         if (res.data.success) {
@@ -127,19 +154,26 @@ export default function EditCDPOForm() {
                                 onChange={handleChange}
                             >
                                 {district_List.map(item => (
-                                    <option value={item.district} onClick={() => setCurrDistrictId(item._id)}>{item.district}</option>
+                                    <option value={item.district} >{item.district}</option>
                                 ))}
                             </select>
 
                             <label for='project'>Project</label>
-                            <input
-                                type='text'
+                            <select
+                                labelId="filterlabel"
+                                id="select"
                                 name='project'
-                                value={entry.project}
-                                autoComplete='off'
+                                label="All"
                                 onChange={handleChange}
+                            // autoComplete='off'
                             >
-                            </input>
+                                <option value={entry._id}>{entry.block}</option>
+                                {blockDataArr?.map(item => (
+                                    item.block !== entry.block ?
+                                        <option value={item._id}>{item.block}</option>
+                                        : ""
+                                ))}
+                            </select>
 
                             <label for='newPassword'>New Password</label>
                             <Grid className='passwordInput'>

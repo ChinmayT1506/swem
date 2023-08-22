@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import './addCdpo.scss'
 import { Box, Grid, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { POST } from '../../../../../services/api';
+import { GET, POST } from '../../../../../services/api';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -16,7 +15,7 @@ export default function AddCDPOForm() {
     const [entry, setEntry] = useState({});
     const [eyeIcon, setEyeIcon] = useState(false);
     const [eyeIcon2, setEyeIcon2] = useState(false);
-    const [currDistrictId, setCurrDistrictId] = useState("");
+    const [blockDataArr, setBlockDataArr] = useState();
 
     const district_List = useSelector(state => state.getDistrictsData.DistrictDataArr)
 
@@ -28,6 +27,32 @@ export default function AddCDPOForm() {
                 [name]: value
             };
         });
+        // get block Data
+        if (event.target.name === "district") {
+            const Master_Project = async () => {
+                let res = await GET("/officer/master/block",
+                    {
+                        district: event.target.value
+                    }
+                )
+                if (res?.data?.success) {
+                    console.log(res.data.result.data)
+                    setBlockDataArr(res?.data?.result?.data)
+                    // dispatch(getBlockData(res?.data?.result?.data))
+                }
+                else if (res.status === 401) {
+                    toast.error("Inavlid User token")
+                    localStorage.removeItem("ACCESS_TOKEN")
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 1500);
+                }
+                else {
+                    toast.error(res.data.message)
+                }
+            }
+            Master_Project()
+        }
     }
 
     // post cdpo data
@@ -110,12 +135,23 @@ export default function AddCDPOForm() {
                                 onChange={handleChange}
                             >
                                 {district_List.map(item => (
-                                    <option value={item.district} onClick={() => setCurrDistrictId(item._id)}>{item.district}</option>
+                                    <option value={item.district}>{item.district}</option>
                                 ))}
                             </select>
-
+                            
                             <label for='project'>Project</label>
-                            <input onChange={handleChange} type='text' name='project' autoComplete='off'></input>
+                            <select
+                                labelId="filterlabel"
+                                id="select"
+                                name='project'
+                                label="All"
+                                onChange={handleChange}
+                                // autoComplete='off'
+                            >
+                                {blockDataArr?.map(item => (
+                                    <option value={item._id}>{item.block}</option>
+                                ))}
+                            </select>
 
                             <label for='password'>Password</label>
                             <Grid className='passwordInput'>

@@ -87,7 +87,7 @@ export const Events = () => {
                 size: pageSize,
             }
         )
-        if (res.data.success) {
+        if (res?.data?.success) {
             setEventData(res?.data?.result?.data)
             setCountofData({
                 countOfPages: Math.ceil(res?.data?.result?.count / pageSize),
@@ -95,18 +95,18 @@ export const Events = () => {
             })
             dispatch(getEventData(res?.data?.result))
         }
-        else if (res.status === 401) {
+        else if (res?.status === 401) {
             toast.error("Inavlid User token")
             localStorage.removeItem("ACCESS_TOKEN")
             setTimeout(() => {
                 navigate("/")
             }, 1500);
         }
-        else if (res.status === 400) {
+        else if (res?.status === 400) {
             toast.error("Failed to Fetch Data")
         }
         else {
-            toast.error(res.data.message)
+            toast.error(res?.data?.message)
         }
     }
     useEffect(() => {

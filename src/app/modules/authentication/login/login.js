@@ -39,15 +39,15 @@ export default function Login() {
             password: loginEntry.password
         };
         const res = await POST("/user/session", payload);
-        if (res.data.success) {
-            document.getElementById("loginBtn").disabled = "true"
+        if (res?.data?.success) {
+            document.getElementById("loginBtn").disabled = "disabled"
             localStorage.setItem("ACCESS_TOKEN", res.data.result.token)
             // localStorage.setItem("USER_TYPE", res.data.result.user_type)
             toast.success("Login Successful")
             setTimeout(() => {
                 navigate("/dashboard")
             }, 1500);
-            dispatch(getLoginData(res.data.result))            
+            dispatch(getLoginData(res.data.result))
             // console.log(res.data.result)
         }
         else {

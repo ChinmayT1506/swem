@@ -4,7 +4,7 @@ import { Box, Grid, InputLabel, MenuItem, Select, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { toast } from 'react-toastify';
-import { POST } from '../../../../../services/api';
+import { GET, POST } from '../../../../../services/api';
 import { useSelector } from 'react-redux';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -15,6 +15,7 @@ export default function AddAnganwadiForm() {
     const [entry, setEntry] = useState({});
     const [eyeIcon, setEyeIcon] = useState(false);
     const [eyeIcon2, setEyeIcon2] = useState(false);
+    const [blockDataArr, setBlockDataArr] = useState();
 
     function toggleButton() {
         let eyeToggle = document.getElementById('passwordInput');
@@ -50,8 +51,35 @@ export default function AddAnganwadiForm() {
                 [name]: value
             };
         });
+        // get block Data
+        if (event.target.name === "district") {
+            const Master_Project = async () => {
+                let res = await GET("/officer/master/block",
+                    {
+                        district: event.target.value
+                    }
+                )
+                if (res?.data?.success) {
+                    console.log(res.data.result.data)
+                    setBlockDataArr(res?.data?.result?.data)
+                    // dispatch(getBlockData(res?.data?.result?.data))
+                }
+                else if (res.status === 401) {
+                    toast.error("Inavlid User token")
+                    localStorage.removeItem("ACCESS_TOKEN")
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 1500);
+                }
+                else {
+                    toast.error(res.data.message)
+                }
+            }
+            Master_Project()
+        }
+
     }
-    
+
     // post anganwadi data
     async function handleSubmit(event) {
         event.preventDefault();
@@ -108,8 +136,18 @@ export default function AddAnganwadiForm() {
                                 ))}
                             </select>
                             <label for='project'>Project</label>
-                            <input onChange={handleChange} className='' id='project' type='text' name='project'></input>
-
+                            <select
+                                labelId="filterlabel"
+                                id="select"
+                                name='project'
+                                label="All"
+                                onChange={handleChange}
+                            // autoComplete='off'
+                            >
+                                {blockDataArr?.map(item => (
+                                    <option value={item._id}>{item.block}</option>
+                                ))}
+                            </select>
                             <label for='sector'>Sector</label>
                             <input onChange={handleChange} className='' id='sector' type='number' name='sector'></input>
 

@@ -32,11 +32,11 @@ export default function AddQueryForm() {
             image: 'https://picsum.photos/id/237/200/300'
         })
         console.log(res)
-        if (res.data.success) {
-            toast.success(res.data.message)
+        if (res?.data?.success) {
+            toast.success(res?.data?.message)
             navigate(-1)
         }
-        else if (res.status === 401) {
+        else if (res?.status === 401) {
             toast.error("Inavalid User token")
             localStorage.removeItem("ACCESS_TOKEN")
             setTimeout(() => {
@@ -44,7 +44,7 @@ export default function AddQueryForm() {
             }, 1500);
         }
         else {
-            toast.error(res.data.message)
+            toast.error(res?.data?.message)
         }
     }
 

@@ -1,0 +1,1 @@
+export const GET_MASTER_BLOCK = "GET_MASTER_BLOCK"

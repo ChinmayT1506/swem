@@ -5,7 +5,6 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import './cdpoMain.scss'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CSVLink } from 'react-csv'
 import BasicTable from '../../../../components/table/table';
@@ -13,14 +12,13 @@ import { GET } from '../../../../../services/api';
 import { toast } from 'react-toastify';
 
 export const CDPO = () => {
-
+    
     const navigate = useNavigate();
-
     let [cdpodata, setcdpoData] = useState([]);
     let [count, setCount] = useState(0);
     let [countOfData, setCountofData] = useState({});
     const [pageSize, setPageSize] = useState(10)
-
+    
     const [searchInput, setSearchInput] = useState({
         eventFilter: "all"
     });

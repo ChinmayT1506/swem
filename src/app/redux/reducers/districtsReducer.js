@@ -1,7 +1,7 @@
 import { GET_MASTER_DISTRICT } from "../types/districtsType";
 
 let initialState = {
-    DistrictDataArr: []
+    DistrictDataArr: ""
 }
 
 export const getDistrictsData = (state= initialState, action) => {

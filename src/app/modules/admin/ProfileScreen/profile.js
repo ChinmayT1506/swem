@@ -48,13 +48,13 @@ export default function Profile() {
 
                         <Stack className='form-main' spacing={2}>
                             <label for='ProfileName'>Name</label>
-                            <input disabled="disabled" value="CDPO ajit" type='text' name='ProfileName'></input>
+                            <input disabled="disabled" value={profileData.name} type='text' name='ProfileName'></input>
                             <label for='mobileNum'>Mobile Number</label>
-                            <input disabled="disabled" value="9990134376" id='tel' type='tel' name='mobileNum'></input>
+                            <input disabled="disabled" value={profileData.mobile} id='tel' type='tel' name='mobileNum'></input>
                             <label for='district'>District</label>
-                            <input disabled="disabled" value="Udhampur" type='text' name='district'></input>
+                            <input disabled="disabled" value={profileData.district} type='text' name='district'></input>
                             <label for='block'>Block</label>
-                            <input disabled="disabled" value="Udhampur" type='text' name='block'></input>
+                            <input disabled="disabled" value={profileData.block} type='text' name='block'></input>
                         </Stack>
                     }
                 </Stack >

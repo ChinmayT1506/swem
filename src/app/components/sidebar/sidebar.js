@@ -33,7 +33,7 @@ import { delLoginData } from '../../redux/actions/loginAction';
 export default function Sidebar() {
 
     const dispatch = useDispatch();
-    const USER = useSelector(state => state?.getLogindata?.loginData.user_type)
+    const USER = useSelector(state => state?.getLogindata?.loginData?.user_type)
     const isAdmin = (USER === "HOD")
 
     const navigate = useNavigate();
@@ -87,6 +87,7 @@ export default function Sidebar() {
                         <h4>Dashboard</h4>
                     </Grid>
                     {isAdmin ?
+                    <>
                     <NavLink to="/schemes" >
                         <List className='List' >
                             <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
@@ -109,8 +110,7 @@ export default function Sidebar() {
                                 </ListItemButton>
                             </ListItem>
                         </List>
-                    </NavLink> : ""}
-                    {isAdmin ?
+                    </NavLink> 
                     <NavLink to="/events" >
                         <List className='List'>
                             <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
@@ -134,7 +134,9 @@ export default function Sidebar() {
                                 </ListItemButton>
                             </ListItem>
                         </List>
-                    </NavLink> : ""}
+                    </NavLink>
+                    </>
+                    : ""}
                     <List className='List'>
                         <ListItem className="list-item" disablePadding sx={{ display: 'block' }} onClick={Collapser}>
                             <ListItemButton
@@ -183,6 +185,7 @@ export default function Sidebar() {
                                 </ListItem>
                             </NavLink>
                             {isAdmin ?
+                            <>
                                 <NavLink to='/users/hod' >
                                     <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
                                         <ListItemButton
@@ -206,9 +209,7 @@ export default function Sidebar() {
                                             }} primary="HOD" sx={1} />
                                         </ListItemButton>
                                     </ListItem>
-                                </NavLink> : ""
-                            }
-                            {isAdmin ?
+                                </NavLink> 
                                 <NavLink to="/users/cdpo">
                                     <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
                                         <ListItemButton
@@ -230,9 +231,7 @@ export default function Sidebar() {
                                             <ListItemText className="list-text" primary="CDPO" sx={1} />
                                         </ListItemButton>
                                     </ListItem>
-                                </NavLink> : ""
-                            }
-                            {isAdmin ?
+                                </NavLink>      
                                 <NavLink to="/users/dpo">
                                     <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
                                         <ListItemButton
@@ -254,7 +253,8 @@ export default function Sidebar() {
                                             <ListItemText className="list-text" primary="DPO" sx={1} />
                                         </ListItemButton>
                                     </ListItem>
-                                </NavLink> : ""
+                                </NavLink>
+                                </> : ""
                             }
                             <NavLink to="/users/geoTagAnganwadi">
                                 <ListItem className="list-item" disablePadding sx={{ display: 'block' }}>
