@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './GeospatialCalculator.scss'
 import { Button, Collapse, Grid, Stack } from '@mui/material'
-import BasicTable from '../../../components/table/table';
 import { GET } from '../../../../services/api';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -30,23 +29,19 @@ export const GeospatialCalculator = () => {
                 [name]: value
             };
         })
-        if (event.target.name === "latitude") {
-            console.log("there is a change")
-        }
     }
-
+    
     const getgeoSpatList = async () => {
         const res = await GET("officer/user/geo-location/near",
-            {
-                latitude: markerPos[0],
-                longitude: markerPos[1],
-                minDistance: entry?.innerRad,
-                maxDistance: entry?.outerRad,
-            }
+        {
+            latitude: markerPos[0],
+            longitude: markerPos[1],
+            minDistance: entry.innerRad,
+            maxDistance: entry.outerRad,
+        }
         )
         if (res?.data?.success) {
             setGeoSpatData(res?.data?.result?.data)
-            console.log(res?.data?.result?.data)
         }
         else if (res?.status === 401) {
             toast.error("Inavalid User token")
@@ -55,16 +50,13 @@ export const GeospatialCalculator = () => {
                 navigate("/")
             }, 1500);
         }
-        else if (res?.status === 400) {
-            toast.error("Failed to Fetch Data")
-        }
         else {
             toast.error(res.data.message)
         }
     }
     useEffect(() => {
         getgeoSpatList()
-    }, []);
+    }, [markerPos[0], markerPos[1], entry.innerRad, entry.outerRad]);
 
 
     function unlockFunc() {
